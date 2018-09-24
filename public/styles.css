@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: teal;
+}
+
+
+#search-results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.result-img {
+    width: 300px;
+    height: 169px;
+    object-fit: cover;
+    object-position: center;
+    padding: 10px;
+}
+
+
+/****************** MODAL ***************************/
+#scene-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(100, 100, 100, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    transform: translateX(10000px);
+}
+
+#scene-modal.shown {
+    transform: translateX(0);
+}
+
+.img-preview {
+    width: 640px;
+    height: 360px;
+}
+
+
+
+
+/************************ PREGAME ***********************/
+
+#pregame-wrapper {
+    padding: 10px;
+}
+#online-players {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.self-player,
+.other-player {
+    height: 300px;
+    width: 300px;
+    border: 1px dotted orange;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
