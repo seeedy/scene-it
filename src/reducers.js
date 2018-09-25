@@ -72,6 +72,24 @@ export default function (state = {}, action) {
         };
     }
 
+    if (action.type == 'ROLE_QUIZZER') {
+        console.log('running reducers', action);
+
+        state = {
+            ...state,
+            role: action.role
+        };
+    }
+
+    if (action.type == 'ROLE_GUESSER') {
+        console.log('running reducers', action);
+
+        state = {
+            ...state,
+            role: action.role
+        };
+    }
+
     return state;
 
 }

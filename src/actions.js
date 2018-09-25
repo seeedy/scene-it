@@ -14,7 +14,8 @@ export async function getScenes(search) {
 }
 
 
-//////////////////// SOCKETS ////////////////////////////////////
+
+//////////////////// PREGAME ////////////////////////////////////
 
 export function onlineUsers(data) {
     return {
@@ -48,5 +49,19 @@ export function userLeft(data) {
     return {
         type: 'USER_LEFT',
         userId: data
+    };
+}
+
+export function quizzer() {
+    return {
+        type: 'ROLE_QUIZZER',
+        role: 'quizzer'
+    };
+}
+
+export function guesser() {
+    return {
+        type: 'ROLE_GUESSER',
+        role: 'guesser'
     };
 }

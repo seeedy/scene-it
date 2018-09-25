@@ -116,6 +116,9 @@ server.listen(8080, function() {
 //////////////////////////////////////////////////////////////////
 
 let onlineUsers = {};
+let counter = 0;
+let arrayReady = [];
+
 
 io.on('connection', socket => {
     console.log(`${socket.id} has connected`);
@@ -135,7 +138,6 @@ io.on('connection', socket => {
     let arrayOfIds = Object.values(onlineUsers);
 
 
-
     if (arrayOfIds.length < 5) {
         socket.emit('onlineUsers', arrayOfIds);
         socket.emit('self', userId);
@@ -144,13 +146,47 @@ io.on('connection', socket => {
     // add else case to show waiting room page ////
     ///////////////////////////////////////////////
 
-    let counter = 0;
-    socket.on('toggleReady', () => {
+    socket.on('toggleReady', self => {
+        // socket.emit to show player ready?
         counter++;
         console.log('counting ready', counter);
-        if (counter >= 4) {
-            app.get('/startGame');
+        arrayReady.push(self);
+        console.log('arrayReady', arrayReady);
+
+        if (counter < 4) {
+            socket.emit('guesser');
+        } else if (counter >= 4) {
+            socket.emit('quizzer');
         }
+
+
+        // function shuffleArray(array) {
+        //     for (var i = array.length - 1; i > 0; i--) {
+        //         var j = Math.floor(Math.random() * (i + 1));
+        //         var temp = array[i];
+        //         array[i] = array[j];
+        //         array[j] = temp;
+        //     }
+        //     return array;
+        // }
+        //
+        // const rndArr = shuffleArray(arrayReady);
+        // console.log(rndArr);
+        //
+        // if (self == rndArr[0]) {
+        //     console.log('quizzer');
+        //     socket.emit('quizzer');
+        //     socket.broadcast('guesser');
+        //     socket.broadcast('quizzerId', self);
+        // } else {
+        //     console.log('guesser');
+        //     socket.emit('guesser');
+        // }
+    });
+
+
+    socket.on('sendScene', scene => {
+        socket.broadcast('getScene', scene);
     });
 
 

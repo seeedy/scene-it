@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { userJoined, onlineUsers, userSelf, userLeft } from './actions';
+import { userJoined, onlineUsers, userSelf, userLeft, quizzer, guesser, getScene } from './actions';
 
 let socket;
 
@@ -22,6 +22,18 @@ export function getSocket(store) {
 
         socket.on('userLeft', data => {
             store.dispatch(userLeft(data));
+        });
+
+        socket.on('quizzer', () => {
+            store.dispatch(quizzer());
+        });
+
+        socket.on('guesser', () => {
+            store.dispatch(guesser());
+        });
+
+        socket.on('getScene', data => {
+            store.dispatch(getScene(data));
         });
 
 
