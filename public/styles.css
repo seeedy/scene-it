@@ -83,21 +83,29 @@ body {
 /************************ PREGAME ***********************/
 
 #pregame-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     padding: 10px;
+    background: black;
+    color: white;
 }
 #online-players {
     width: 100%;
+    height: 100%;
     display: flex;
+    flex-wrap: wrap;
     position: relative;
 }
 
 .self-player,
 .other-player {
-    height: 300px;
-    width: 300px;
+    height: 400px;
+    width: 400px;
     border: 1px dotted orange;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 50px;
 }

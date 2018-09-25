@@ -32,14 +32,7 @@ export default function (state = {}, action) {
         };
     }
 
-    if (action.type == 'OTHER_USERS') {
-        console.log('running reducers', action);
 
-        state = {
-            ...state,
-            otherUsers: action.otherUsers
-        };
-    }
 
     if (action.type == 'USER_JOINED') {
         console.log('running reducers', action);

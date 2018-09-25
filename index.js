@@ -119,6 +119,11 @@ let onlineUsers = {};
 let counter = 0;
 let arrayReady = [];
 
+let onlinePlayers = [];
+let uniquePlayer = true;
+
+
+
 
 io.on('connection', socket => {
     console.log(`${socket.id} has connected`);
@@ -129,6 +134,31 @@ io.on('connection', socket => {
 
     const socketId = socket.id;
     const userId = socket.request.session.uid;
+
+    const player = {
+        socketId: socket.id,
+        userId: socket.request.session.uid,
+        name: '',
+        color: '',
+        role: '',
+        points: 0
+    };
+
+
+
+    for (let i = 0; i < onlinePlayers.length; i++) {
+        if (onlinePlayers[i].userId == socket.request.session.uid) {
+            uniquePlayer = false;
+        }
+    }
+
+    if (uniquePlayer === true) {
+        onlinePlayers.push(player);
+    }
+
+    console.log('onlinePlayers', onlinePlayers);
+
+
 
 
     if (!Object.values(onlineUsers).includes(userId)) {
@@ -151,7 +181,6 @@ io.on('connection', socket => {
         counter++;
         console.log('counting ready', counter);
         arrayReady.push(self);
-        console.log('arrayReady', arrayReady);
 
         if (counter < 4) {
             socket.emit('guesser');
@@ -186,7 +215,8 @@ io.on('connection', socket => {
 
 
     socket.on('sendScene', scene => {
-        socket.broadcast('getScene', scene);
+        console.log(onlineUsers);
+        // socket.broadcast('getScene', scene);
     });
 
 
@@ -196,6 +226,14 @@ io.on('connection', socket => {
             console.log(`${socket.id} has disconnected`);
             socket.broadcast.emit('userLeft', userId);
         }
+
+
+
+        onlinePlayers = onlinePlayers.filter(player => player.socketId != socket.id);
+
+        console.log('onlinePlayers', onlinePlayers);
+
+
     });
 
 });

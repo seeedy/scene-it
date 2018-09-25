@@ -23,7 +23,7 @@ export default class App extends React.Component {
                         component={ Search }
                     />
                     <Route
-                        exact path="/pre"
+                        exact path="/"
                         component={ Pregame }
                     />
                 </div>
