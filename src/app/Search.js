@@ -1,7 +1,7 @@
 import React from 'react';
 // import axios from './axios';
 import { connect } from 'react-redux';
-import { getScenes } from '../actions';
+import { getScenes, chooseScene } from '../actions';
 import { getSocket } from '../socket';
 
 
@@ -47,12 +47,12 @@ class Search extends React.Component {
             scene: null
         });
         document.getElementById("scene-modal").classList.remove("shown");
-
     }
 
     chooseScene() {
         console.log('click on choose scene');
-        getSocket().emit('sendScene', this.state.scene);
+        getSocket().emit('chooseScene', this.state.scene);
+        // this.props.dispatch(chooseScene(this.state.scene));
     }
 
 

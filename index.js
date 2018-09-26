@@ -220,9 +220,11 @@ io.on('connection', socket => {
     });
 
 
-    socket.on('sendScene', scene => {
+    socket.on('chooseScene', scene => {
         console.log('broadcasting scene on server', scene);
-        socket.broadcast.emit('getScene', scene);
+        io.emit('currScene', scene);
+
+        currPlayer.role = 'scorer';
     });
 
     socket.on('sendGuess', guess => {

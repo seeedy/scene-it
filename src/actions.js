@@ -1,6 +1,8 @@
 import axios from './axios';
 
 
+
+///////////////////////// SEARCH /////////////////////////////////////
 export async function getScenes(search) {
 
     const response = await axios.get('/search/' + search);
@@ -12,6 +14,14 @@ export async function getScenes(search) {
     };
 
 }
+
+// set chosen scene in redux to use in parent component
+// export function chooseScene(scene) {
+//     return {
+//         type: 'CHOOSE_SCENE',
+//         scene
+//     };
+// }
 
 
 
@@ -66,9 +76,9 @@ export function guesser(data) {
     };
 }
 
-export function getScene(data) {
+export function currScene(data) {
     return {
-        type: 'GET_SCENE',
+        type: 'CURR_SCENE',
         scene: data
     };
 }

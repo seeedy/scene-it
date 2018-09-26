@@ -1,6 +1,8 @@
 export default function (state = {}, action) {
 
 
+    ////////////////////////// SEARCH ////////////////////////////
+
     if (action.type == 'GET_SCENES') {
         console.log('running reducers', action);
 
@@ -11,7 +13,7 @@ export default function (state = {}, action) {
     }
 
 
-    /////////////////////////// SOCKETS /////////////////////////
+    /////////////////////////// PREGAME /////////////////////////
 
 
     if (action.type == 'GET_ONLINE_PLAYERS') {
@@ -100,7 +102,7 @@ export default function (state = {}, action) {
         };
     }
 
-    if (action.type == 'GET_SCENE') {
+    if (action.type == 'CURR_SCENE') {
         console.log('running reducers', action);
 
         state = {
