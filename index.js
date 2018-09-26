@@ -115,7 +115,6 @@ server.listen(8080, function() {
 ///////////////////////// SOCKETS ////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-let onlineUsers = {};
 let counter = 0;
 let arrayReady = [];
 
@@ -135,7 +134,7 @@ io.on('connection', socket => {
     const socketId = socket.id;
     const userId = socket.request.session.uid;
 
-    const player = {
+    const currPlayer = {
         socketId: socket.id,
         userId: socket.request.session.uid,
         name: '',
@@ -146,15 +145,20 @@ io.on('connection', socket => {
 
 
 
-    for (let i = 0; i < onlinePlayers.length; i++) {
-        if (onlinePlayers[i].userId == socket.request.session.uid) {
-            uniquePlayer = false;
-        }
-    }
+    // for (let i = 0; i < onlinePlayers.length; i++) {
+    //     if (onlinePlayers[i].userId == socket.request.session.uid) {
+    //         uniquePlayer = false;
+    //     }
+    // }
+    //
+    // if (uniquePlayer === true) {
+    //     onlinePlayers.push(currPlayer);
+    //     socket.broadcast.emit('playerJoined', currPlayer);
+    // }
 
-    if (uniquePlayer === true) {
-        onlinePlayers.push(player);
-        socket.broadcast.emit('playerJoined', player);
+    if (!onlinePlayers.find(player => player.userId == currPlayer.userId)) {
+        onlinePlayers.push(currPlayer);
+        socket.broadcast.emit('playerJoined', currPlayer);
     }
 
     console.log('onlinePlayers', onlinePlayers);
@@ -168,7 +172,7 @@ io.on('connection', socket => {
 
     if (onlinePlayers.length < 5) {
         socket.emit('onlinePlayers', onlinePlayers);
-        socket.emit('self', userId);
+        socket.emit('self', currPlayer);
     }
     ////////////////////////////////////////////////
     // add else case to show waiting room page ////
@@ -181,10 +185,14 @@ io.on('connection', socket => {
         arrayReady.push(self);
 
         if (counter < 4) {
-            socket.emit('guesser');
+            currPlayer.role = 'guesser';
+            socket.emit('guesser', currPlayer);
         } else if (counter >= 4) {
-            socket.emit('quizzer');
+            currPlayer.role = 'quizzer';
+            socket.emit('quizzer', currPlayer);
         }
+
+        console.log('send currPlayer from server', currPlayer);
 
 
         // function shuffleArray(array) {
@@ -225,16 +233,17 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         // delete onlineUsers[socketId];
+        console.log(`${socket.id} has disconnected`);
 
+        if (onlinePlayers.find(player =>
+            player.socketId == currPlayer.socketId)) {
 
-        if (!Object.values(onlinePlayers).includes(userId)) {
-            console.log(`${socket.id} has disconnected`);
-            socket.broadcast.emit('playerLeft', userId);
+            socket.broadcast.emit('playerLeft', currPlayer);
+
+            onlinePlayers = onlinePlayers.filter(player =>
+                player.socketId != currPlayer.socketId);
         }
 
-
-
-        onlinePlayers = onlinePlayers.filter(player => player.userId != userId);
         console.log('onlinePlayers', onlinePlayers);
 
 

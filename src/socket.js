@@ -24,12 +24,12 @@ export function getSocket(store) {
             store.dispatch(playerLeft(data));
         });
 
-        socket.on('quizzer', () => {
-            store.dispatch(quizzer());
+        socket.on('quizzer', data => {
+            store.dispatch(quizzer(data));
         });
 
-        socket.on('guesser', () => {
-            store.dispatch(guesser());
+        socket.on('guesser', data => {
+            store.dispatch(guesser(data));
         });
 
         socket.on('getScene', data => {

@@ -41,28 +41,28 @@ export function otherUsers(data) {
 export function playerJoined(data) {
     return {
         type: 'PLAYER_JOINED',
-        userId: data
+        currPlayer: data
     };
 }
 
 export function playerLeft(data) {
     return {
         type: 'PLAYER_LEFT',
-        userId: data
+        currPlayer: data
     };
 }
 
-export function quizzer() {
+export function quizzer(data) {
     return {
         type: 'ROLE_QUIZZER',
-        role: 'quizzer'
+        currPlayer: data
     };
 }
 
-export function guesser() {
+export function guesser(data) {
     return {
         type: 'ROLE_GUESSER',
-        role: 'guesser'
+        currPlayer: data
     };
 }
 

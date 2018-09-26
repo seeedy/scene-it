@@ -17,9 +17,9 @@ class Pregame extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
 
-        if (props.role !== state.role) {
+        if (props.self && props.self.role != state.role) {
             return {
-                role: props.role,
+                role: props.self.role,
             };
         }
         return state;
@@ -34,13 +34,17 @@ class Pregame extends React.Component {
     render() {
 
         const { onlinePlayers } = this.props;
+        const { self } = this.props;
 
         if (!onlinePlayers) {
-            return null;
+            return <div>no players</div>;
         }
 
-        const { self } = this.props;
-        const otherPlayers = onlinePlayers.filter(player => player.userId != self);
+        if (!self) {
+            return <div>no self</div>;
+        }
+
+        const otherPlayers = onlinePlayers.filter(player => player.userId != self.userId);
 
         if (!this.state.role) {
             return(
@@ -49,7 +53,7 @@ class Pregame extends React.Component {
                     <div id="online-players">
                         <div className="self-player">
                             myself
-                            <div>{self}</div>
+                            {self &&<div>{self.userId}</div>}
                             <button
                                 className="rdy-btn"
                                 onClick={this.toggleReady}
@@ -57,7 +61,7 @@ class Pregame extends React.Component {
                         </div>
                         {otherPlayers.map(player => (
                             <div className="other-player" key={player.userId}>
-                                other player
+                                {player.userId}
                             </div>
                         ))}
                     </div>
@@ -84,10 +88,11 @@ class Pregame extends React.Component {
 
 
 const mapStateToProps = state => {
+    console.log('state', state);
     return {
         onlinePlayers: state.onlinePlayers,
         self: state.self,
-        role: state.role
+        // role: state.self.role
     };
 };
 

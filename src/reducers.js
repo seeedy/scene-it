@@ -37,13 +37,14 @@ export default function (state = {}, action) {
     if (action.type == 'PLAYER_JOINED') {
         console.log('running reducers', action);
 
-        if (state.onlinePlayers.includes(action.userId)) {
+        if (state.onlinePlayers.find(elem =>
+            elem.userId == action.currPlayer.userId)) {
             return state;
         }
 
-        // add user joined to users array
+        // add player joined to players array
         const onlinePlayersUpdated =
-            [...state.onlinePlayers, action.userId];
+            [...state.onlinePlayers, action.currPlayer];
 
         state = {
             ...state,
@@ -57,7 +58,7 @@ export default function (state = {}, action) {
 
         // remove user left from users array
         const onlinePlayersUpdated =
-            state.onlinePlayers.filter(player => player.userId != action.userId);
+            state.onlinePlayers.filter(player => player.userId != action.currPlayer.userId);
 
         state = {
             ...state,
@@ -67,19 +68,35 @@ export default function (state = {}, action) {
 
     if (action.type == 'ROLE_QUIZZER') {
         console.log('running reducers', action);
+        console.log(action.currPlayer);
+
+
+        const updatedPlayerRoles = state.onlinePlayers.filter(player =>
+            player.userId != action.currPlayer.userId);
+
+        updatedPlayerRoles.push(action.currPlayer);
+
+        console.log(updatedPlayerRoles);
 
         state = {
             ...state,
-            role: action.role
+            onlinePlayers: updatedPlayerRoles,
+            self: action.currPlayer
         };
     }
 
     if (action.type == 'ROLE_GUESSER') {
         console.log('running reducers', action);
 
+        const updatedPlayerRoles = state.onlinePlayers.filter(player =>
+            player.userId != action.currPlayer.userId);
+
+        updatedPlayerRoles.push(action.currPlayer);
+
         state = {
             ...state,
-            role: action.role
+            onlinePlayers: updatedPlayerRoles,
+            self: action.currPlayer
         };
     }
 
