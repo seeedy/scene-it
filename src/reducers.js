@@ -68,7 +68,7 @@ export default function (state = {}, action) {
         };
     }
 
-    if (action.type == 'ROLE_QUIZZER') {
+    if (action.type == 'SET_ROLE') {
         console.log('running reducers', action);
         console.log(action.currPlayer);
 
@@ -87,20 +87,20 @@ export default function (state = {}, action) {
         };
     }
 
-    if (action.type == 'ROLE_GUESSER') {
-        console.log('running reducers', action);
-
-        const updatedPlayerRoles = state.onlinePlayers.filter(player =>
-            player.userId != action.currPlayer.userId);
-
-        updatedPlayerRoles.push(action.currPlayer);
-
-        state = {
-            ...state,
-            onlinePlayers: updatedPlayerRoles,
-            self: action.currPlayer
-        };
-    }
+    // if (action.type == 'ROLE_GUESSER') {
+    //     console.log('running reducers', action);
+    //
+    //     const updatedPlayerRoles = state.onlinePlayers.filter(player =>
+    //         player.userId != action.currPlayer.userId);
+    //
+    //     updatedPlayerRoles.push(action.currPlayer);
+    //
+    //     state = {
+    //         ...state,
+    //         onlinePlayers: updatedPlayerRoles,
+    //         self: action.currPlayer
+    //     };
+    // }
 
     if (action.type == 'CURR_SCENE') {
         console.log('running reducers', action);

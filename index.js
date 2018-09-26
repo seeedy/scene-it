@@ -117,11 +117,7 @@ server.listen(8080, function() {
 
 let counter = 0;
 let arrayReady = [];
-
 let onlinePlayers = [];
-let uniquePlayer = true;
-
-
 
 
 io.on('connection', socket => {
@@ -131,8 +127,8 @@ io.on('connection', socket => {
         return socket.disconnect(true);
     }
 
-    const socketId = socket.id;
-    const userId = socket.request.session.uid;
+    // const socketId = socket.id;
+    // const userId = socket.request.session.uid;
 
     const currPlayer = {
         socketId: socket.id,
@@ -186,10 +182,10 @@ io.on('connection', socket => {
 
         if (counter < 4) {
             currPlayer.role = 'guesser';
-            socket.emit('guesser', currPlayer);
+            socket.emit('setRole', currPlayer);
         } else if (counter >= 4) {
             currPlayer.role = 'quizzer';
-            socket.emit('quizzer', currPlayer);
+            socket.emit('setRole', currPlayer);
         }
 
         console.log('send currPlayer from server', currPlayer);
@@ -225,6 +221,7 @@ io.on('connection', socket => {
         io.emit('currScene', scene);
 
         currPlayer.role = 'scorer';
+        socket.emit('setRole', currPlayer);
     });
 
     socket.on('sendGuess', guess => {

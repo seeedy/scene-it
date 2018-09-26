@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { playerJoined, onlinePlayers, userSelf, playerLeft, quizzer, guesser, currScene } from './actions';
+import { playerJoined, onlinePlayers, userSelf, playerLeft, setRole, currScene } from './actions';
 
 let socket;
 
@@ -24,12 +24,9 @@ export function getSocket(store) {
             store.dispatch(playerLeft(data));
         });
 
-        socket.on('quizzer', data => {
-            store.dispatch(quizzer(data));
-        });
-
-        socket.on('guesser', data => {
-            store.dispatch(guesser(data));
+        socket.on('setRole', data => {
+            console.log('setRole in socket');
+            store.dispatch(setRole(data));
         });
 
         socket.on('currScene', data => {

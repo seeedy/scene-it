@@ -1,7 +1,7 @@
 import React from 'react';
 // import axios from './axios';
 import { connect } from 'react-redux';
-import { getScenes, chooseScene } from '../actions';
+import { getScenes } from '../actions';
 import { getSocket } from '../socket';
 
 
@@ -52,7 +52,6 @@ class Search extends React.Component {
     chooseScene() {
         console.log('click on choose scene');
         getSocket().emit('chooseScene', this.state.scene);
-        // this.props.dispatch(chooseScene(this.state.scene));
     }
 
 

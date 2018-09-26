@@ -62,19 +62,13 @@ export function playerLeft(data) {
     };
 }
 
-export function quizzer(data) {
+export function setRole(data) {
     return {
-        type: 'ROLE_QUIZZER',
+        type: 'SET_ROLE',
         currPlayer: data
     };
 }
 
-export function guesser(data) {
-    return {
-        type: 'ROLE_GUESSER',
-        currPlayer: data
-    };
-}
 
 export function currScene(data) {
     return {

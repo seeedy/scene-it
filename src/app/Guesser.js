@@ -35,7 +35,7 @@ class Guesser extends React.Component {
 
                     <input type="text" />
                 </div>
-            </div>
+            </div>;
         }
 
         return (

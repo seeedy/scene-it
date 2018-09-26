@@ -88,11 +88,9 @@ class Pregame extends React.Component {
 
 
 const mapStateToProps = state => {
-    console.log('state', state);
     return {
         onlinePlayers: state.onlinePlayers,
         self: state.self,
-        // role: state.self.role
     };
 };
 
