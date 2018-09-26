@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Search from './search';
-import Pregame from './pregame';
+import Search from './Search';
+import Pregame from './Pregame';
+import Scorer from './Scorer';
 
 
 export default class App extends React.Component {
@@ -25,6 +26,10 @@ export default class App extends React.Component {
                     <Route
                         exact path="/"
                         component={ Pregame }
+                    />
+                    <Route
+                        exact path="/scorer"
+                        component={ Scorer }
                     />
                 </div>
 

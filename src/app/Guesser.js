@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { } from '../actions';
 import { getSocket } from '../socket';
 
 
@@ -17,7 +16,7 @@ class Guesser extends React.Component {
 
 
     sendGuess(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             getSocket().emit('sendGuess', e.target.value);
         }
     }
@@ -26,16 +25,18 @@ class Guesser extends React.Component {
     render() {
 
         if (!this.props.scene) {
-            <div id="game-wrapper">
+            return (
+                <div id="game-wrapper">
 
 
-                <div id="guesser-wrapper">
+                    <div id="guesser-wrapper">
 
-                    <h1>Waiting for scene</h1>
+                        <h1>Waiting for scene</h1>
 
-                    <input type="text" />
+                        <input type="text" />
+                    </div>
                 </div>
-            </div>;
+            );
         }
 
         return (

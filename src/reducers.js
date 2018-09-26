@@ -70,15 +70,11 @@ export default function (state = {}, action) {
 
     if (action.type == 'SET_ROLE') {
         console.log('running reducers', action);
-        console.log(action.currPlayer);
-
 
         const updatedPlayerRoles = state.onlinePlayers.filter(player =>
             player.userId != action.currPlayer.userId);
 
         updatedPlayerRoles.push(action.currPlayer);
-
-        console.log(updatedPlayerRoles);
 
         state = {
             ...state,
@@ -87,27 +83,26 @@ export default function (state = {}, action) {
         };
     }
 
-    // if (action.type == 'ROLE_GUESSER') {
-    //     console.log('running reducers', action);
-    //
-    //     const updatedPlayerRoles = state.onlinePlayers.filter(player =>
-    //         player.userId != action.currPlayer.userId);
-    //
-    //     updatedPlayerRoles.push(action.currPlayer);
-    //
-    //     state = {
-    //         ...state,
-    //         onlinePlayers: updatedPlayerRoles,
-    //         self: action.currPlayer
-    //     };
-    // }
-
     if (action.type == 'CURR_SCENE') {
         console.log('running reducers', action);
 
         state = {
             ...state,
             scene: action.scene
+        };
+    }
+
+    if (action.type == 'RECEIVE_GUESS') {
+        console.log('running reducers', action);
+
+        const onlinePlayerGuesses = state.onlinePlayers.filter(player =>
+            player.userId != action.currPlayer.userId);
+
+        onlinePlayerGuesses.push(action.currPlayer);
+
+        state = {
+            ...state,
+            onlinePlayers: onlinePlayerGuesses,
         };
     }
 

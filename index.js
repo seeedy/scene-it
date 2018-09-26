@@ -215,6 +215,11 @@ io.on('connection', socket => {
         // }
     });
 
+    socket.on('setPlayerName', name => {
+        console.log('receiving name on server', name);
+        io.emit('changePlayerName', {...currPlayer, name});
+    });
+
 
     socket.on('chooseScene', scene => {
         console.log('broadcasting scene on server', scene);
@@ -225,8 +230,8 @@ io.on('connection', socket => {
     });
 
     socket.on('sendGuess', guess => {
-        console.log('broadcasting guess on server', guess);
-        socket.broadcast.emit('getGuess', guess);
+        console.log('broadcasting guess on server', {...currPlayer, guess});
+        socket.broadcast.emit('receiveGuess', {...currPlayer, guess});
     });
 
 

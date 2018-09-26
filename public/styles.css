@@ -7,6 +7,10 @@ body {
     background: teal;
 }
 
+.hidden {
+    transform: translateY(10000px);
+}
+
 #outer-wrapper {
     position: absolute;
     width: 100%;
@@ -87,28 +91,61 @@ body {
     width: 100%;
     height: 100%;
     padding: 10px;
-    background: black;
-    color: white;
+    background: grey;
+    color: black;
 }
 
 #online-players {
+    position: relative;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-wrap: wrap;
     position: relative;
 }
 
+.player-outside {
+    background: black;
+    padding: 10px;
+}
+
 .self-player,
 .other-player {
-    height: 400px;
-    width: 400px;
-    border: 1px dotted orange;
+    height: 380px;
+    width: 380px;
+    background: white;
+    /* border: 10px solid black; */
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 50px;
+    /* margin: 40px; */
+
+}
+
+#filmroll-top,
+#filmroll-btm {
+    height: 60px;
+    width: 100%;
+    background: black;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#filmroll-top {
+    padding-top: 10px;
+}
+
+#filmroll-btm {
+    padding-bottom: 10px;
+}
+
+.perforations {
+    width: 40px;
+    height: 50px;
+    background: white;
+    border-radius: 5px;
 }
 
 
@@ -136,4 +173,54 @@ body {
 .guess-img {
     width: 640px;
     height: 360px;
+}
+
+/*********************** SCORER *******************************/
+
+
+#scorer-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#incoming-guesses {
+    height: 300px;
+    width: 640px;
+    border: 1px dotted green;
+    background: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.player-guess {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    padding: 5px 10px;
+    background: red;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.player-guess:hover {
+    background: green;
+}
+
+.guesser-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.guesser-name {
+    font-weight: bold;
+}
+
+.guess-text {
+    overflow-wrap: break-word;
 }

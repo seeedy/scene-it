@@ -15,13 +15,12 @@ export async function getScenes(search) {
 
 }
 
-// set chosen scene in redux to use in parent component
-// export function chooseScene(scene) {
-//     return {
-//         type: 'CHOOSE_SCENE',
-//         scene
-//     };
-// }
+export function receiveGuess(data) {
+    return {
+        type: 'RECEIVE_GUESS',
+        currPlayer: data
+    };
+}
 
 
 

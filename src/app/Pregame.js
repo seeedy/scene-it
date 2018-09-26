@@ -2,8 +2,9 @@ import React from 'react';
 // import axios from './axios';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
-import Search from './search';
-import Guesser from './guesser';
+import Search from './Search';
+import Guesser from './Guesser';
+import Scorer from './Scorer';
 
 class Pregame extends React.Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class Pregame extends React.Component {
         };
 
         this.toggleReady = this.toggleReady.bind(this);
+        this.setPlayerName = this.setPlayerName.bind(this);
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -23,6 +25,14 @@ class Pregame extends React.Component {
             };
         }
         return state;
+    }
+
+    setPlayerName(e) {
+        if (e.keyCode === 13) {
+            console.log(e.target.value);
+            getSocket().emit('setPlayerName', e.target.value);
+            this.btn.classList.remove("hidden");
+        }
     }
 
 
@@ -51,17 +61,72 @@ class Pregame extends React.Component {
                 <div id="pregame-wrapper">
                     <h2>Players online</h2>
                     <div id="online-players">
-                        <div className="self-player">
-                            myself
-                            {self &&<div>{self.userId}</div>}
-                            <button
-                                className="rdy-btn"
-                                onClick={this.toggleReady}
-                            >Ready</button>
+
+
+                        <div className="player-wrapper">
+                            <div id="filmroll-top">
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                            </div>
+                            <div className="player-outside">
+                                <div className="self-player">
+
+                                    {self.name && self.name}
+                                    {self &&<div>{self.userId}</div>}
+
+                                    <input
+                                        type="text"
+                                        placeholder="choose screenname"
+                                        onKeyDown={this.setPlayerName}
+                                    />
+
+                                    <button
+                                        className={`rdy-btn hidden`}
+                                        onClick={this.toggleReady}
+                                        ref={btn => this.btn = btn}
+                                    >Ready
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="filmroll-btm">
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                                <div className="perforations"></div>
+                            </div>
                         </div>
+
                         {otherPlayers.map(player => (
-                            <div className="other-player" key={player.userId}>
-                                {player.userId}
+                            <div className="player-wrapper" key={player.userId}>
+                                <div id="filmroll-top">
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                </div>
+                                <div className="player-outside">
+
+                                    <div className="other-player">
+                                        {player.userId}
+                                    </div>
+                                </div>
+
+                                <div id="filmroll-btm">
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                    <div className="perforations"></div>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -75,6 +140,10 @@ class Pregame extends React.Component {
 
         if (this.state.role == 'guesser') {
             return (<Guesser />);
+        }
+
+        if (this.state.role == 'scorer') {
+            return (<Scorer />);
         }
 
 
