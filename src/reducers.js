@@ -14,12 +14,12 @@ export default function (state = {}, action) {
     /////////////////////////// SOCKETS /////////////////////////
 
 
-    if (action.type == 'GET_ONLINE_USERS') {
+    if (action.type == 'GET_ONLINE_PLAYERS') {
         console.log('running reducers', action);
 
         state = {
             ...state,
-            onlineUsers: action.onlineUsers
+            onlinePlayers: action.onlinePlayers
         };
     }
 
@@ -34,34 +34,34 @@ export default function (state = {}, action) {
 
 
 
-    if (action.type == 'USER_JOINED') {
+    if (action.type == 'PLAYER_JOINED') {
         console.log('running reducers', action);
 
-        if (state.onlineUsers.includes(action.userId)) {
+        if (state.onlinePlayers.includes(action.userId)) {
             return state;
         }
 
         // add user joined to users array
-        const onlineUsersUpdated =
-            [...state.onlineUsers, action.userId];
+        const onlinePlayersUpdated =
+            [...state.onlinePlayers, action.userId];
 
         state = {
             ...state,
-            onlineUsers: onlineUsersUpdated
+            onlinePlayers: onlinePlayersUpdated
         };
     }
 
 
-    if (action.type == 'USER_LEFT') {
+    if (action.type == 'PLAYER_LEFT') {
         console.log('running reducers', action);
 
         // remove user left from users array
-        const onlineUsersUpdated =
-            state.onlineUsers.filter(id => id != action.userId);
+        const onlinePlayersUpdated =
+            state.onlinePlayers.filter(player => player.userId != action.userId);
 
         state = {
             ...state,
-            onlineUsers: onlineUsersUpdated
+            onlinePlayers: onlinePlayersUpdated
         };
     }
 
@@ -80,6 +80,15 @@ export default function (state = {}, action) {
         state = {
             ...state,
             role: action.role
+        };
+    }
+
+    if (action.type == 'GET_SCENE') {
+        console.log('running reducers', action);
+
+        state = {
+            ...state,
+            scene: action.scene
         };
     }
 

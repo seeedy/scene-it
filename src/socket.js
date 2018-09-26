@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { userJoined, onlineUsers, userSelf, userLeft, quizzer, guesser, getScene } from './actions';
+import { playerJoined, onlinePlayers, userSelf, playerLeft, quizzer, guesser, getScene } from './actions';
 
 let socket;
 
@@ -8,20 +8,20 @@ export function getSocket(store) {
     if (!socket) {
         socket = io.connect();
 
-        socket.on('onlineUsers', data => {
-            store.dispatch(onlineUsers(data));
+        socket.on('onlinePlayers', data => {
+            store.dispatch(onlinePlayers(data));
         });
 
         socket.on('self', data => {
             store.dispatch(userSelf(data));
         });
 
-        socket.on('userJoined', data => {
-            store.dispatch(userJoined(data));
+        socket.on('playerJoined', data => {
+            store.dispatch(playerJoined(data));
         });
 
-        socket.on('userLeft', data => {
-            store.dispatch(userLeft(data));
+        socket.on('playerLeft', data => {
+            store.dispatch(playerLeft(data));
         });
 
         socket.on('quizzer', () => {

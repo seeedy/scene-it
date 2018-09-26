@@ -17,10 +17,10 @@ export async function getScenes(search) {
 
 //////////////////// PREGAME ////////////////////////////////////
 
-export function onlineUsers(data) {
+export function onlinePlayers(data) {
     return {
-        type: 'GET_ONLINE_USERS',
-        onlineUsers: data
+        type: 'GET_ONLINE_PLAYERS',
+        onlinePlayers: data
     };
 }
 
@@ -38,16 +38,16 @@ export function otherUsers(data) {
     };
 }
 
-export function userJoined(data) {
+export function playerJoined(data) {
     return {
-        type: 'USER_JOINED',
+        type: 'PLAYER_JOINED',
         userId: data
     };
 }
 
-export function userLeft(data) {
+export function playerLeft(data) {
     return {
-        type: 'USER_LEFT',
+        type: 'PLAYER_LEFT',
         userId: data
     };
 }
@@ -63,5 +63,12 @@ export function guesser() {
     return {
         type: 'ROLE_GUESSER',
         role: 'guesser'
+    };
+}
+
+export function getScene(data) {
+    return {
+        type: 'GET_SCENE',
+        scene: data
     };
 }

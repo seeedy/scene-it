@@ -154,22 +154,20 @@ io.on('connection', socket => {
 
     if (uniquePlayer === true) {
         onlinePlayers.push(player);
+        socket.broadcast.emit('playerJoined', player);
     }
 
     console.log('onlinePlayers', onlinePlayers);
 
+    // if (!Object.values(onlineUsers).includes(userId)) {
+    //     onlineUsers[socketId] = userId;
+    //     socket.broadcast.emit('userJoined', userId);
+    // }
+    // let arrayOfIds = Object.values(onlineUsers);
 
 
-
-    if (!Object.values(onlineUsers).includes(userId)) {
-        onlineUsers[socketId] = userId;
-        socket.broadcast.emit('userJoined', userId);
-    }
-    let arrayOfIds = Object.values(onlineUsers);
-
-
-    if (arrayOfIds.length < 5) {
-        socket.emit('onlineUsers', arrayOfIds);
+    if (onlinePlayers.length < 5) {
+        socket.emit('onlinePlayers', onlinePlayers);
         socket.emit('self', userId);
     }
     ////////////////////////////////////////////////
@@ -215,22 +213,28 @@ io.on('connection', socket => {
 
 
     socket.on('sendScene', scene => {
-        console.log(onlineUsers);
-        // socket.broadcast('getScene', scene);
+        console.log('broadcasting scene on server', scene);
+        socket.broadcast.emit('getScene', scene);
+    });
+
+    socket.on('sendGuess', guess => {
+        console.log('broadcasting guess on server', guess);
+        socket.broadcast.emit('getGuess', guess);
     });
 
 
     socket.on('disconnect', () => {
-        delete onlineUsers[socketId];
-        if (!Object.values(onlineUsers).includes(userId)) {
+        // delete onlineUsers[socketId];
+
+
+        if (!Object.values(onlinePlayers).includes(userId)) {
             console.log(`${socket.id} has disconnected`);
-            socket.broadcast.emit('userLeft', userId);
+            socket.broadcast.emit('playerLeft', userId);
         }
 
 
 
-        onlinePlayers = onlinePlayers.filter(player => player.socketId != socket.id);
-
+        onlinePlayers = onlinePlayers.filter(player => player.userId != userId);
         console.log('onlinePlayers', onlinePlayers);
 
 

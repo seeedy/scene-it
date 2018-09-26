@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
 import Search from './search';
+import Guesser from './guesser';
 
 class Pregame extends React.Component {
     constructor(props) {
@@ -32,14 +33,14 @@ class Pregame extends React.Component {
 
     render() {
 
-        const { onlineUsers } = this.props;
+        const { onlinePlayers } = this.props;
 
-        if (!onlineUsers) {
+        if (!onlinePlayers) {
             return null;
         }
 
         const { self } = this.props;
-        const otherUsers = onlineUsers.filter(id => id != self);
+        const otherPlayers = onlinePlayers.filter(player => player.userId != self);
 
         if (!this.state.role) {
             return(
@@ -54,8 +55,8 @@ class Pregame extends React.Component {
                                 onClick={this.toggleReady}
                             >Ready</button>
                         </div>
-                        {otherUsers.map(user => (
-                            <div className="other-player" key={user}>
+                        {otherPlayers.map(player => (
+                            <div className="other-player" key={player.userId}>
                                 other player
                             </div>
                         ))}
@@ -69,7 +70,7 @@ class Pregame extends React.Component {
         }
 
         if (this.state.role == 'guesser') {
-            return (<div>Guesser</div>);
+            return (<Guesser />);
         }
 
 
@@ -84,7 +85,7 @@ class Pregame extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        onlineUsers: state.onlineUsers,
+        onlinePlayers: state.onlinePlayers,
         self: state.self,
         role: state.role
     };
