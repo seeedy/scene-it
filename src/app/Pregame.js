@@ -39,7 +39,6 @@ class Pregame extends React.Component {
             getSocket().emit('setPlayerName', e.target.value);
             this.btn.classList.remove("hidden");
             this.input.classList.add("hidden");
-
         }
     }
 
@@ -47,6 +46,7 @@ class Pregame extends React.Component {
     toggleReady() {
         console.log('emitting ready to server');
         getSocket().emit('toggleReady', this.props.self);
+        this.btn.classList.add("hidden");
     }
 
     render() {

@@ -116,8 +116,8 @@ server.listen(8080, function() {
 //////////////////////////////////////////////////////////////////
 
 let counter = 0;
-let arrayReady = [];
 let onlinePlayers = [];
+let readyPlayers = [];
 
 
 io.on('connection', socket => {
@@ -157,8 +157,6 @@ io.on('connection', socket => {
         socket.broadcast.emit('playerJoined', currPlayer);
     }
 
-    console.log('onlinePlayers', onlinePlayers);
-
     // if (!Object.values(onlineUsers).includes(userId)) {
     //     onlineUsers[socketId] = userId;
     //     socket.broadcast.emit('userJoined', userId);
@@ -176,30 +174,54 @@ io.on('connection', socket => {
 
     socket.on('toggleReady', self => {
         // socket.emit to show player ready?
-        counter++;
-        console.log('counting ready', counter);
-        arrayReady.push(self);
+        // counter++;
+        console.log('counting ready');
+        // arrayReady.push(self);
+        //
+        // if (counter < 4) {
+        //     currPlayer.role = 'guesser';
+        //     socket.emit('setRole', currPlayer);
+        // } else if (counter >= 4) {
+        //     currPlayer.role = 'quizzer';
+        //     socket.emit('setRole', currPlayer);
+        // }
+        //
+        // console.log('send currPlayer from server', currPlayer);
 
-        if (counter < 4) {
-            currPlayer.role = 'guesser';
-            socket.emit('setRole', currPlayer);
-        } else if (counter >= 4) {
-            currPlayer.role = 'quizzer';
-            socket.emit('setRole', currPlayer);
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
         }
 
-        console.log('send currPlayer from server', currPlayer);
+        currPlayer.ready = true;
+        readyPlayers.push(currPlayer);
+        console.log('readyPlayers', readyPlayers);
+
+        if (readyPlayers.length >= 4) {
+            let shuffledPlayers = shuffleArray(readyPlayers);
+
+            shuffledPlayers[0].role = 'quizzer';
+            shuffledPlayers[1].role = 'guesser';
+            shuffledPlayers[2].role = 'guesser';
+            shuffledPlayers[3].role = 'guesser';
+
+            console.log('shuffledPlayers', shuffledPlayers);
+
+            shuffledPlayers.forEach(player => {
+                io.to(player.socketId).emit('setRole', player);
+            });
 
 
-        // function shuffleArray(array) {
-        //     for (var i = array.length - 1; i > 0; i--) {
-        //         var j = Math.floor(Math.random() * (i + 1));
-        //         var temp = array[i];
-        //         array[i] = array[j];
-        //         array[j] = temp;
-        //     }
-        //     return array;
-        // }
+        }
+
+
+
+
         //
         // const rndArr = shuffleArray(arrayReady);
         // console.log(rndArr);
@@ -259,10 +281,6 @@ io.on('connection', socket => {
             onlinePlayers = onlinePlayers.filter(player =>
                 player.socketId != currPlayer.socketId);
         }
-
-        console.log('onlinePlayers', onlinePlayers);
-
-
     });
 
 });

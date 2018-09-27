@@ -17,6 +17,10 @@ main {
     transform: translateY(10000px);
 }
 
+button:focus {
+    outline: none;
+}
+
 /******************* SEARCH *********************************/
 
 #outer-wrapper {
