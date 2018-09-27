@@ -10,13 +10,14 @@ main {
     background-image: url("/img/curtains.jpg");
     background-size: cover;
     background-position: center;
+    font-family: 'Special Elite', cursive;
 }
 
 .hidden {
     transform: translateY(10000px);
 }
 
-
+/******************* SEARCH *********************************/
 
 #outer-wrapper {
     position: absolute;
@@ -112,6 +113,40 @@ main {
     font-size: 70px;
 }
 
+#name-input {
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    border-left: none;
+    border-right: none;
+    background: none;
+    padding: 10px 0;
+    text-align: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.05rem;
+}
+
+#name-input:focus {
+    outline: none;
+}
+
+.rdy-btn {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-family: 'Special Elite', cursive;
+    letter-spacing: 2px;
+}
+
+.rdy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 2px grey;
+}
+
 #online-players {
     position: relative;
     /* width: 100%; */
@@ -135,6 +170,8 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.5em;
 }
 
 #filmroll-top,
@@ -178,7 +215,6 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
 }
 
 .guess-img {

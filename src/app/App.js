@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Search from './Search';
 import Pregame from './Pregame';
 import Scorer from './Scorer';
+import Guesser from './Guesser';
 
 
 export default class App extends React.Component {
@@ -30,6 +31,10 @@ export default class App extends React.Component {
                     <Route
                         exact path="/scorer"
                         component={ Scorer }
+                    />
+                    <Route
+                        exact path="/guesser"
+                        component={ Guesser }
                     />
                 </div>
 

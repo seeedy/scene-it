@@ -5,7 +5,6 @@ import { getSocket } from '../socket';
 import Search from './Search';
 import Guesser from './Guesser';
 import Scorer from './Scorer';
-import Transition from './Transition';
 
 class Pregame extends React.Component {
     constructor(props) {
@@ -39,6 +38,8 @@ class Pregame extends React.Component {
             console.log(e.target.value);
             getSocket().emit('setPlayerName', e.target.value);
             this.btn.classList.remove("hidden");
+            this.input.classList.add("hidden");
+
         }
     }
 
@@ -81,22 +82,20 @@ class Pregame extends React.Component {
                             </div>
                             <div className="player-outside">
                                 <div className="self-player">
-
                                     {self.name}
-                                    {self &&<div>{self.userId}</div>}
-
                                     <input
                                         type="text"
-                                        placeholder="choose screenname"
+                                        placeholder="Welcome! Enter your name"
                                         onKeyDown={this.setPlayerName}
+                                        ref={input => this.input = input}
+                                        id="name-input"
                                     />
 
                                     <button
                                         className={`rdy-btn hidden`}
                                         onClick={this.toggleReady}
                                         ref={btn => this.btn = btn}
-                                    >Ready
-                                    </button>
+                                    >Ready</button>
                                 </div>
                             </div>
                             <div id="filmroll-btm">
@@ -122,7 +121,7 @@ class Pregame extends React.Component {
                                 <div className="player-outside">
 
                                     <div className="other-player">
-                                        {player.name || player.userId}
+                                        {player.name || 'Player joined'}
                                     </div>
                                 </div>
 
@@ -153,9 +152,7 @@ class Pregame extends React.Component {
             return (<Scorer />);
         }
 
-        if (this.state.role == 'transition') {
-            return (<Transition />);
-        }
+
 
 
 

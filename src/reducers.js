@@ -129,12 +129,13 @@ export default function (state = {}, action) {
         };
     }
 
-    if (action.type == 'CHANGE_NAME') {
+    if (action.type == 'ROUND_TRANSITION') {
         console.log('running reducers', action);
 
         state = {
             ...state,
             onlinePlayers: action.onlinePlayers,
+            role: 'transition'
         };
     }
 

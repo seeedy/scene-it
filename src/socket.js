@@ -4,7 +4,6 @@ import { playerJoined, onlinePlayers, userSelf, playerLeft, setRole, currScene, 
 let socket;
 
 export function getSocket(store) {
-    console.log('store', store);
     if (!socket) {
         socket = io.connect();
 

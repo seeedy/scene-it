@@ -136,7 +136,7 @@ io.on('connection', socket => {
         // name: '',
         // color: '',
         role: '',
-        points: 0
+        score: 0
     };
 
 
@@ -238,11 +238,12 @@ io.on('connection', socket => {
 
         let winner = onlinePlayers.find(player =>
             player.userId == roundWinner.userId);
-        winner.points++;
+        winner.score++;
         winner.wonRound = true;
-        console.log('array with winner', onlinePlayers);
+        console.log('players on round transition', onlinePlayers);
 
-        io.socket('transition', onlinePlayers);
+        io.emit('transition', onlinePlayers);
+        // socket.emit('self', currPlayer);
     });
 
 
