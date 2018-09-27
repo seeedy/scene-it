@@ -18,19 +18,6 @@ class Search extends React.Component {
     }
 
 
-    // getScenes() {
-    //
-    //     console.log('making axios req to server', this.search.value);
-    //
-    //     axios.get('/search/' + this.search.value)
-    //         .then(response => {
-    //             console.log('data on frontend', response);
-    //             this.setState({
-    //                 results: response.data
-    //             });
-    //         });
-    // }
-
     getScenes() {
         this.props.dispatch(getScenes(this.search.value));
     }
@@ -64,11 +51,42 @@ class Search extends React.Component {
 
                 <div id="scene-modal">
                     <div id="preview">
-                        <img className="img-preview" src={this.state.scene} />
+                        <div id="filmroll-top">
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+
+                        </div>
+                        <div className="player-outside">
+                            <img className="img-preview" src={this.state.scene} />
+                        </div>
+                        <div id="filmroll-btm">
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+
+                        </div>
                         <button
                             className="scene-btn"
                             onClick={this.chooseScene}
                         >
+
+
+
                         Choose scene</button>
                         <button
                             className="scene-btn"

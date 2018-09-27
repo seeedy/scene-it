@@ -133,8 +133,8 @@ io.on('connection', socket => {
     const currPlayer = {
         socketId: socket.id,
         userId: socket.request.session.uid,
-        name: '',
-        color: '',
+        // name: '',
+        // color: '',
         role: '',
         points: 0
     };
@@ -217,21 +217,32 @@ io.on('connection', socket => {
 
     socket.on('setPlayerName', name => {
         console.log('receiving name on server', name);
-        io.emit('changePlayerName', {...currPlayer, name});
+        currPlayer.name = name;
+        io.emit('changePlayerName', currPlayer);
     });
 
 
     socket.on('chooseScene', scene => {
-        console.log('broadcasting scene on server', scene);
         io.emit('currScene', scene);
-
         currPlayer.role = 'scorer';
         socket.emit('setRole', currPlayer);
     });
 
     socket.on('sendGuess', guess => {
-        console.log('broadcasting guess on server', {...currPlayer, guess});
-        socket.broadcast.emit('receiveGuess', {...currPlayer, guess});
+        currPlayer.guess = guess;
+        socket.broadcast.emit('receiveGuess', currPlayer);
+    });
+
+    socket.on('roundWinner', roundWinner => {
+        onlinePlayers.forEach(player => player.role='transition');
+
+        let winner = onlinePlayers.find(player =>
+            player.userId == roundWinner.userId);
+        winner.points++;
+        winner.wonRound = true;
+        console.log('array with winner', onlinePlayers);
+
+        io.socket('transition', onlinePlayers);
     });
 
 

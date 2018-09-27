@@ -9,13 +9,29 @@ class Scorer extends React.Component {
         super(props);
         this.state={};
 
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.pickWinner = this.pickWinner.bind(this);
     }
 
 
 
-    pickWinner(e) {
-        console.log(e.target);
+    showModal(player) {
+        this.setState({
+            winner: player
+        });
+        console.log(this.state);
+        document.getElementById("scorer-modal").classList.add("shown");
+    }
+
+    closeModal() {
+        document.getElementById("scorer-modal").classList.remove("shown");
+    }
+
+
+    pickWinner() {
+        getSocket().emit('roundWinner', this.state.winner);
+        document.getElementById("scorer-modal").classList.remove("shown");
     }
 
 
@@ -39,11 +55,61 @@ class Scorer extends React.Component {
 
             <div id="game-wrapper">
 
+                <div id="scorer-modal">
+                    <div id="pick-winner">
+                        <p>Pick this answer as winner?</p>
+                        <div className="buttons-box">
+                            <button
+                                className="scene-btn"
+                                onClick={this.pickWinner}
+                            ><i className="fas fa-check-circle"></i></button>
+                            <button
+                                className="scene-btn"
+                                onClick={this.closeModal}
+                            ><i className="fas fa-times-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div id="scorer-wrapper">
 
 
-                    <img className="guess-img" src={this.props.scene} />
+                    <div className="player-wrapper">
+                        <div id="filmroll-top">
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                        </div>
+                        <div className="player-outside">
+                            <img className="guess-img" src={this.props.scene} />
+
+                        </div>
+                        <div id="filmroll-btm">
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                        </div>
+                    </div>
+
+
+
+
+
 
                     <div id="incoming-guesses">
 
@@ -52,11 +118,11 @@ class Scorer extends React.Component {
                                 {!!player.guess &&
                                     <div
                                         className="player-guess"
-                                        ref={guess => this.guess = guess} onClick={this.pickWinner}
+                                        ref={guess => this.guess = guess} onClick={e => this.showModal(player)}
                                     >
 
                                         <div className="guesser-info">
-                                            <div className="guesser-name">name</div>
+                                            <div className="guesser-name">{player.name}</div>
                                             <div className="guess-time">time</div>
                                         </div>
                                         <div className="guess-text">

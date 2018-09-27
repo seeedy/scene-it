@@ -106,6 +106,38 @@ export default function (state = {}, action) {
         };
     }
 
+    if (action.type == 'CHANGE_NAME') {
+        console.log('running reducers', action);
+
+        const onlinePlayerNames = state.onlinePlayers.filter(player =>
+            player.userId != action.currPlayer.userId);
+
+        onlinePlayerNames.push(action.currPlayer);
+
+
+        if (action.currPlayer.userId == state.self.userId) {
+            state = {
+                ...state,
+                onlinePlayers: onlinePlayerNames,
+                self: action.currPlayer
+            };
+        }
+
+        state = {
+            ...state,
+            onlinePlayers: onlinePlayerNames,
+        };
+    }
+
+    if (action.type == 'CHANGE_NAME') {
+        console.log('running reducers', action);
+
+        state = {
+            ...state,
+            onlinePlayers: action.onlinePlayers,
+        };
+    }
+
     return state;
 
 }

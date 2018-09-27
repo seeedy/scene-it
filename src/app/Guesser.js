@@ -46,10 +46,40 @@ class Guesser extends React.Component {
 
                 <div id="guesser-wrapper">
 
+                    <div className="player-wrapper">
+                        <div id="filmroll-top">
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                        </div>
+                        <div className="player-outside">
+                            <img className="guess-img" src={this.props.scene} />
 
-                    <img className="guess-img" src={this.props.scene} />
+                        </div>
+                        <div id="filmroll-btm">
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                            <div className="perforations"></div>
+                        </div>
+                    </div>
+
 
                     <input
+                        id="guess-input"
                         type="text"
                         onKeyDown={this.sendGuess}/>
                 </div>
@@ -66,7 +96,9 @@ class Guesser extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        scene: state.scene
+        scene: state.scene,
+        onlinePlayers: state.onlinePlayers,
+        self: state.self
     };
 };
 

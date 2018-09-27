@@ -75,3 +75,17 @@ export function currScene(data) {
         scene: data
     };
 }
+
+export function changePlayerName(data) {
+    return {
+        type: 'CHANGE_NAME',
+        currPlayer: data
+    };
+}
+
+export function roundTransition(data) {
+    return {
+        type: 'ROUND_TRANSITION',
+        onlinePlayers: data
+    };
+}

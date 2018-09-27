@@ -5,6 +5,7 @@ import { getSocket } from '../socket';
 import Search from './Search';
 import Guesser from './Guesser';
 import Scorer from './Scorer';
+import Transition from './Transition';
 
 class Pregame extends React.Component {
     constructor(props) {
@@ -27,6 +28,12 @@ class Pregame extends React.Component {
         return state;
     }
 
+    // componentDidUpdate(prevProps) {
+    //     if (this.props.self.name != prevProps.self.name) {
+    //         //
+    //     }
+    // }
+
     setPlayerName(e) {
         if (e.keyCode === 13) {
             console.log(e.target.value);
@@ -47,11 +54,11 @@ class Pregame extends React.Component {
         const { self } = this.props;
 
         if (!onlinePlayers) {
-            return <div>no players</div>;
+            return <div>sdkufgisfg</div>;
         }
 
         if (!self) {
-            return <div>no self</div>;
+            return null;
         }
 
         const otherPlayers = onlinePlayers.filter(player => player.userId != self.userId);
@@ -59,7 +66,7 @@ class Pregame extends React.Component {
         if (!this.state.role) {
             return(
                 <div id="pregame-wrapper">
-                    <h2>Players online</h2>
+                    <h1>Guess What&apos;ched</h1>
                     <div id="online-players">
 
 
@@ -75,7 +82,7 @@ class Pregame extends React.Component {
                             <div className="player-outside">
                                 <div className="self-player">
 
-                                    {self.name && self.name}
+                                    {self.name}
                                     {self &&<div>{self.userId}</div>}
 
                                     <input
@@ -115,7 +122,7 @@ class Pregame extends React.Component {
                                 <div className="player-outside">
 
                                     <div className="other-player">
-                                        {player.userId}
+                                        {player.name || player.userId}
                                     </div>
                                 </div>
 
@@ -144,6 +151,10 @@ class Pregame extends React.Component {
 
         if (this.state.role == 'scorer') {
             return (<Scorer />);
+        }
+
+        if (this.state.role == 'transition') {
+            return (<Transition />);
         }
 
 
