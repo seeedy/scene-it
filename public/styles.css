@@ -10,7 +10,7 @@ main {
     background-image: url("/img/curtains.jpg");
     background-size: cover;
     background-position: center;
-    font-family: 'Special Elite', cursive;
+    font-family: 'Noto Serif JP', sans-serif;
 }
 
 .hidden {
@@ -27,9 +27,6 @@ button:focus {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("/img/curtains.jpg");
-    background-size: cover;
-    background-position: center;
     overflow-y: hidden;
 }
 
@@ -108,6 +105,7 @@ button:focus {
     flex-direction: column;
     align-items: center;
     overflow-y: hidden;
+    /* font-family: 'Special Elite', cursive; */
 }
 
 #pregame-wrapper h1 {
@@ -142,13 +140,21 @@ button:focus {
     font-weight: bold;
     cursor: pointer;
     font-size: 1.2rem;
-    font-family: 'Special Elite', cursive;
+    font-family: 'Noto Serif JP', sans-serif;
     letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 2px grey;
+
 }
 
 .rdy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 2px 2px 2px grey;
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.ready {
+    margin-top: 20px;
+    font-weight: bold;
 }
 
 #online-players {
@@ -328,4 +334,34 @@ button:focus {
 .fa-times-circle  {
     color: red;
     /* font-size: 2em; */
+}
+
+/************************ TRANSITION ***************************/
+
+#transition-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 150px;
+    font-size: 1.5rem;
+}
+
+#winner {
+    margin-bottom: 40px;
+}
+
+#score-board {
+    padding-top: 20px;
+    width: 300px;
+    line-height: 50px;
+}
+
+
+
+
+.player-score {
+    display: flex;
+    justify-content: space-between;
 }

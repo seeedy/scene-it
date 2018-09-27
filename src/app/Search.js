@@ -80,19 +80,19 @@ class Search extends React.Component {
                             <div className="perforations"></div>
 
                         </div>
-                        <button
-                            className="scene-btn"
-                            onClick={this.chooseScene}
-                        >
-
-
-
-                        Choose scene</button>
-                        <button
-                            className="scene-btn"
-                            onClick={this.closeModal}
-                        >
-                        Cancel</button>
+                        <div id="scene-modal-menu">
+                            Choose this scene?
+                            <div className="buttons-box">
+                                <button
+                                    className="scene-btn"
+                                    onClick={this.chooseScene}
+                                ><i className="fas fa-check-circle"></i></button>
+                                <button
+                                    className="scene-btn"
+                                    onClick={this.closeModal}
+                                ><i className="fas fa-times-circle"></i></button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

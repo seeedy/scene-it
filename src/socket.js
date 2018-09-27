@@ -43,6 +43,10 @@ export function getSocket(store) {
             store.dispatch(roundTransition(data));
         });
 
+        socket.on('ready', data => {
+            store.dispatch(receiveGuess(data));
+        });
+
     }
 
     return socket;

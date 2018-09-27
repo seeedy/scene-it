@@ -45,8 +45,9 @@ class Pregame extends React.Component {
 
     toggleReady() {
         console.log('emitting ready to server');
-        getSocket().emit('toggleReady', this.props.self);
+        getSocket().emit('toggleReady');
         this.btn.classList.add("hidden");
+        this.ready.classList.remove("hidden");
     }
 
     render() {
@@ -83,6 +84,12 @@ class Pregame extends React.Component {
                             <div className="player-outside">
                                 <div className="self-player">
                                     {self.name}
+
+                                    <div className={`ready hidden`}
+                                        ref={ready => this.ready = ready}>
+                                        <p>I&apos;M READY!</p>
+                                    </div>
+
                                     <input
                                         type="text"
                                         placeholder="Welcome! Enter your name"
@@ -122,6 +129,10 @@ class Pregame extends React.Component {
 
                                     <div className="other-player">
                                         {player.name || 'Player joined'}
+
+                                        <div className="ready">
+                                            {player.ready && <p>READY!</p>}
+                                        </div>
                                     </div>
                                 </div>
 

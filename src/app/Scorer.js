@@ -131,7 +131,7 @@ class Scorer extends React.Component {
                                     {!!player.guess &&
                                         <div
                                             className="player-guess"
-                                            ref={guess => this.guess = guess} onClick={e => this.showModal(player)}
+                                            ref={guess => this.guess = guess} onClick={() => this.showModal(player)}
                                         >
 
                                             <div className="guesser-info">

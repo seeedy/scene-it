@@ -4,6 +4,7 @@ import Search from './Search';
 import Pregame from './Pregame';
 import Scorer from './Scorer';
 import Guesser from './Guesser';
+import Transition from './Transition';
 
 
 export default class App extends React.Component {
@@ -35,6 +36,10 @@ export default class App extends React.Component {
                     <Route
                         exact path="/guesser"
                         component={ Guesser }
+                    />
+                    <Route
+                        exact path="/transition"
+                        component={ Transition }
                     />
                 </div>
 

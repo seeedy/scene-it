@@ -172,21 +172,9 @@ io.on('connection', socket => {
     // add else case to show waiting room page ////
     ///////////////////////////////////////////////
 
-    socket.on('toggleReady', self => {
-        // socket.emit to show player ready?
-        // counter++;
+    socket.on('toggleReady', () => {
+
         console.log('counting ready');
-        // arrayReady.push(self);
-        //
-        // if (counter < 4) {
-        //     currPlayer.role = 'guesser';
-        //     socket.emit('setRole', currPlayer);
-        // } else if (counter >= 4) {
-        //     currPlayer.role = 'quizzer';
-        //     socket.emit('setRole', currPlayer);
-        // }
-        //
-        // console.log('send currPlayer from server', currPlayer);
 
         function shuffleArray(array) {
             for (var i = array.length - 1; i > 0; i--) {
@@ -199,6 +187,8 @@ io.on('connection', socket => {
         }
 
         currPlayer.ready = true;
+        socket.broadcast.emit('ready', currPlayer);
+
         readyPlayers.push(currPlayer);
         console.log('readyPlayers', readyPlayers);
 
@@ -265,7 +255,6 @@ io.on('connection', socket => {
         console.log('players on round transition', onlinePlayers);
 
         io.emit('transition', onlinePlayers);
-        // socket.emit('self', currPlayer);
     });
 
 
