@@ -135,12 +135,12 @@ class Scorer extends React.Component {
                                         >
 
                                             <div className="guesser-info">
-                                                <div className="guesser-name">{player.name}</div>
-                                                <div className="guess-time">time</div>
+                                                <div className="guesser-name">{player.name}: </div>
+                                                <div className="guess-text">
+                                                    {player.guess}
+                                                </div>
                                             </div>
-                                            <div className="guess-text">
-                                                {player.guess}
-                                            </div>
+
                                         </div>}
                                 </div>
                             ))}

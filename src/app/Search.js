@@ -1,5 +1,4 @@
 import React from 'react';
-// import axios from './axios';
 import { connect } from 'react-redux';
 import { getScenes } from '../actions';
 import { getSocket } from '../socket';
@@ -15,6 +14,7 @@ class Search extends React.Component {
         this.showModal = this.showModal.bind(this);
         this.chooseScene = this.chooseScene.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.keyDown = this.keyDown.bind(this);
     }
 
 
@@ -39,6 +39,12 @@ class Search extends React.Component {
     chooseScene() {
         console.log('click on choose scene');
         getSocket().emit('chooseScene', this.state.scene);
+    }
+
+    keyDown(e) {
+        if (e.keyCode === 13) {
+            this.props.dispatch(getScenes(this.search.value));
+        }
     }
 
 
@@ -81,12 +87,14 @@ class Search extends React.Component {
 
                         </div>
                         <div id="scene-modal-menu">
-                            Choose this scene?
-                            <div className="buttons-box">
+                            <div className="preview-buttons-box">
                                 <button
                                     className="scene-btn"
                                     onClick={this.chooseScene}
                                 ><i className="fas fa-check-circle"></i></button>
+                                <div id="choose-scene">
+                                    Choose this scene?
+                                </div>
                                 <button
                                     className="scene-btn"
                                     onClick={this.closeModal}
@@ -104,6 +112,7 @@ class Search extends React.Component {
                             id="search-input"
                             type="text"
                             onSubmit={this.getScenes}
+                            onKeyDown={this.keyDown}
                             ref={search => (this.search = search)}
                             placeholder="Search movie scene"
                         />
@@ -111,19 +120,20 @@ class Search extends React.Component {
                             id="search-btn"
                             onClick={this.getScenes}
                         >
-                            submit
+                            <i className="fas fa-search"></i>
                         </button>
                     </div>
 
                     <div id="search-results">
                         {scenes && scenes.map(item => (
-                            <div key={item.link}>
-                                <img
-                                    className="result-img"
-                                    src={item.link}
-                                    onClick={this.showModal}
-                                />
-                            </div>
+                            // <div key={item.link}>
+                            <img
+                                className="result-img"
+                                key={item.link}
+                                src={item.link}
+                                onClick={this.showModal}
+                            />
+                            // </div>
                         ))}
                     </div>
 

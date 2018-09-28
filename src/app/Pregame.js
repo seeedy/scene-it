@@ -68,7 +68,7 @@ class Pregame extends React.Component {
         if (!this.state.role) {
             return(
                 <div id="pregame-wrapper">
-                    <h1>Guess What&apos;ched</h1>
+                    <h1>Scene it?</h1>
                     <div id="online-players">
 
 
@@ -83,7 +83,8 @@ class Pregame extends React.Component {
                             </div>
                             <div className="player-outside">
                                 <div className="self-player">
-                                    {self.name}
+
+                                    <div className="self-name">{self.name}</div>
 
                                     <div className={`ready hidden`}
                                         ref={ready => this.ready = ready}>
@@ -92,7 +93,7 @@ class Pregame extends React.Component {
 
                                     <input
                                         type="text"
-                                        placeholder="Welcome! Enter your name"
+                                        placeholder="Enter your name"
                                         onKeyDown={this.setPlayerName}
                                         ref={input => this.input = input}
                                         id="name-input"

@@ -12,6 +12,12 @@ class Transition extends React.Component {
 
     }
 
+    componentDidMount() {
+        this.setState({
+            scene: this.props.scene
+        });
+    }
+
 
     render() {
 
@@ -30,6 +36,8 @@ class Transition extends React.Component {
             <div id="transition-wrapper">
                 {winner && <div id="winner">
                     {winner.name} won this round!
+                    <img src={this.state.scene} className="winner-img" />
+                    Winning answer: {winner.guess}
                 </div>}
 
 
@@ -37,7 +45,7 @@ class Transition extends React.Component {
                 <div id="score-board">
                     {onlinePlayers.map(player => (
                         <div className="player-score" key={player.userId}>
-                            <p>{player.name} bla</p>
+                            <p>{player.name}</p>
                             <p>{player.score}</p>
                         </div>
                     ))}

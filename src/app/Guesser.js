@@ -9,7 +9,7 @@ class Guesser extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            role: 'guesser'
+            role: 'guesser',
         };
 
         this.sendGuess = this.sendGuess.bind(this);
@@ -25,11 +25,19 @@ class Guesser extends React.Component {
         return state;
     }
 
+    componentDidMount() {
+        this.setState({
+            scene: ''
+        });
+    }
+
 
 
     sendGuess(e) {
         if (e.keyCode === 13) {
             getSocket().emit('sendGuess', e.target.value);
+            this.input.classList.add("hidden");
+            this.after.classList.remove("hidden");
         }
     }
 
@@ -92,11 +100,20 @@ class Guesser extends React.Component {
                             </div>
                         </div>
 
-
-                        <input
-                            id="guess-input"
-                            type="text"
-                            onKeyDown={this.sendGuess}/>
+                        <div id="guess-bar" ref={input => this.input = input}>
+                            <input
+                                id="guess-input"
+                                type="text"
+                                onKeyDown={this.sendGuess}
+                                placeholder="Guess the movie"
+                            />
+                            <button className="guess-btn" onClick={this.btnClick}>
+                                <i className="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div className={`after-guess hidden`} ref={after => this.after = after}>
+                            Your answer was sent! Waiting for decision...
+                        </div>
                     </div>
                 </div>
 

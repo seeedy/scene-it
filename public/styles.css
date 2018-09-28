@@ -21,6 +21,10 @@ button:focus {
     outline: none;
 }
 
+input:focus {
+    outline: none;
+}
+
 /******************* SEARCH *********************************/
 
 #outer-wrapper {
@@ -39,6 +43,30 @@ button:focus {
 }
 
 
+#search-bar {
+    border: 1px solid dimgrey;
+    background: white;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+#search-input {
+    border: none;
+    padding: 2px 24px 2px 12px;
+}
+
+#search-input:focus {
+    outline: none;
+}
+
+#search-btn {
+    border: none;
+    background: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+
 #search-results {
     position: absolute;
     top: 150px;
@@ -53,9 +81,12 @@ button:focus {
 .result-img {
     width: 300px;
     height: 169px;
+    border-radius: 10px;
     object-fit: cover;
     object-position: center;
-    padding: 10px;
+    cursor: pointer;
+    box-shadow: 1px 2px 3px dimgrey;
+    margin: 10px;
 }
 
 
@@ -78,19 +109,33 @@ button:focus {
     transform: translateX(0);
 }
 
-#preview {
-    display: flex;
-    flex-direction: column;
 
-}
 
 .img-preview {
     width: 640px;
     height: 360px;
-    border-radius: 10px;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: center;
 }
 
 
+.preview-buttons-box {
+    background: black;
+    padding: 0 20px 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+.preview-buttons-box button {
+    background: none;
+    border: none;
+    font-size: 2.5em;
+    cursor: pointer;
+}
 
 
 /************************ PREGAME ***********************/
@@ -104,8 +149,7 @@ button:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: hidden;
-    /* font-family: 'Special Elite', cursive; */
+    /* overflow-y: hidden; */
 }
 
 #pregame-wrapper h1 {
@@ -123,7 +167,7 @@ button:focus {
     background: none;
     padding: 10px 0;
     text-align: center;
-    font-family: 'Special Elite', cursive;
+    /* font-family: 'Special Elite', cursive; */
     font-size: 1.05rem;
 }
 
@@ -182,6 +226,7 @@ button:focus {
     align-items: center;
     font-family: 'Special Elite', cursive;
     font-size: 1.5em;
+    overflow-wrap: break-word;
 }
 
 #filmroll-top,
@@ -233,9 +278,28 @@ button:focus {
     border-radius: 10px;
 }
 
+#guess-bar {
+    border: 1px solid dimgrey;
+    background: white;
+    padding: 5px 14px 5px 5px;
+    border-radius: 25px;
+    margin-top: 20px;
+}
+
 #guess-input {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    border: none;
+    padding: 2px 24px 2px 12px;
+}
+
+.fa-paper-plane {
+    color: black;
+}
+
+.guess-btn {
+    border: none;
+    background: none;
+    font-size: 1.1em;
+    cursor: pointer;
 }
 
 /*********************** SCORER *******************************/
@@ -254,7 +318,6 @@ button:focus {
 #incoming-guesses {
     height: 200px;
     width: 640px;
-    border: 1px dotted green;
     background: transparent;
     display: flex;
     flex-direction: column;
@@ -264,9 +327,9 @@ button:focus {
 .player-guess {
     display: flex;
     flex-direction: column;
-    margin: 10px 0;
+    margin: 5px 0;
     padding: 5px 10px;
-    background: royalblue;
+    background: darkslategrey;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -289,6 +352,12 @@ button:focus {
     overflow-wrap: break-word;
 }
 
+.after-guess {
+    position: absolute;
+    top: 600px;
+    color: white;
+}
+
 
 #scorer-modal {
     position: fixed;
@@ -309,8 +378,10 @@ button:focus {
 }
 
 #pick-winner {
-    border: 2px dotted pink;
-    background: white;
+    background: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .buttons-box {
@@ -344,18 +415,29 @@ button:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 150px;
+    padding-top: 60px;
     font-size: 1.5rem;
 }
 
 #winner {
-    margin-bottom: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+}
+
+.winner-img {
+    width: 300px;
+    height: 169px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+    margin: 10px;
 }
 
 #score-board {
-    padding-top: 20px;
     width: 300px;
-    line-height: 50px;
 }
 
 
