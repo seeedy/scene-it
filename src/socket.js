@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { playerJoined, onlinePlayers, userSelf, playerLeft, setRole, currScene, receiveGuess, changePlayerName, roundTransition } from './actions';
+import { playerJoined, onlinePlayers, userSelf, playerLeft, setRole, currScene, receiveGuess, changePlayerName, roundTransition, searchTerm } from './actions';
 
 let socket;
 
@@ -45,6 +45,11 @@ export function getSocket(store) {
 
         socket.on('ready', data => {
             store.dispatch(receiveGuess(data));
+        });
+
+        socket.on('searchTerm', data => {
+            console.log('socket on searchTerm');
+            store.dispatch(searchTerm(data));
         });
 
     }

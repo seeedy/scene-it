@@ -20,6 +20,7 @@ class Search extends React.Component {
 
     getScenes() {
         this.props.dispatch(getScenes(this.search.value));
+        getSocket().emit('searchedFor', this.search.value);
     }
 
     showModal(e) {
@@ -44,6 +45,7 @@ class Search extends React.Component {
     keyDown(e) {
         if (e.keyCode === 13) {
             this.props.dispatch(getScenes(this.search.value));
+            getSocket().emit('searchedFor', this.search.value);
         }
     }
 

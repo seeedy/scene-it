@@ -6,7 +6,6 @@ import axios from './axios';
 export async function getScenes(search) {
 
     const response = await axios.get('/search/' + search);
-    console.log('data on action', response.data);
     const scenesData = response.data;
     return {
         type: 'GET_SCENES',
@@ -19,6 +18,13 @@ export function receiveGuess(data) {
     return {
         type: 'RECEIVE_GUESS',
         currPlayer: data
+    };
+}
+
+export function searchTerm(data) {
+    return {
+        type: 'SEARCH_TERM',
+        searchTerm: data
     };
 }
 

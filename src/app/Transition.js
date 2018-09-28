@@ -14,7 +14,8 @@ class Transition extends React.Component {
 
     componentDidMount() {
         this.setState({
-            scene: this.props.scene
+            scene: this.props.scene,
+            searchTerm: this.props.searchTerm
         });
     }
 
@@ -35,7 +36,8 @@ class Transition extends React.Component {
         return (
             <div id="transition-wrapper">
                 {winner && <div id="winner">
-                    {winner.name} won this round!
+                    <p>This was a scene from {this.state.searchTerm}. </p>
+                    <p>{winner.name} won this round!</p>
                     <img src={this.state.scene} className="winner-img" />
                     Winning answer: {winner.guess}
                 </div>}
@@ -60,7 +62,8 @@ const mapStateToProps = state => {
     return {
         scene: state.scene,
         onlinePlayers: state.onlinePlayers,
-        self: state.self
+        self: state.self,
+        searchTerm: state.searchTerm
     };
 };
 

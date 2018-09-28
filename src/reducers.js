@@ -139,6 +139,15 @@ export default function (state = {}, action) {
         };
     }
 
+    if (action.type == 'SEARCH_TERM') {
+        console.log('running reducers', action);
+
+        state = {
+            ...state,
+            searchTerm: action.searchTerm
+        };
+    }
+
     return state;
 
 }

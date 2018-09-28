@@ -4,7 +4,8 @@ const compression = require('compression');
 const cookieSession = require('cookie-session');
 const secrets = require('./secrets.json');
 const server = require('http').Server(app);
-const io = require('socket.io')(server, { origins: 'localhost:8080' });
+// add back origin after testing
+const io = require('socket.io')(server, {});
 const csurf = require('csurf');
 // const axios = require('./src/axios');
 // we require the standard axios here instead of importing from component, as we dont have form fields on the browser
@@ -90,7 +91,6 @@ app.get('/search/:movie', (req, res) => {
     axios.all([getFirstResults(), getNextResults()])
         .then(response => {
             const data = response[0].data.items.concat(response[1].data.items);
-            console.log(data);
             res.json(data);
         })
         .catch(err => console.log(err));
@@ -115,7 +115,6 @@ server.listen(8080, function() {
 ///////////////////////// SOCKETS ////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-let counter = 0;
 let onlinePlayers = [];
 let readyPlayers = [];
 
@@ -126,9 +125,6 @@ io.on('connection', socket => {
     if (!socket.request.session || !socket.request.session.uid) {
         return socket.disconnect(true);
     }
-
-    // const socketId = socket.id;
-    // const userId = socket.request.session.uid;
 
     const currPlayer = {
         socketId: socket.id,
@@ -174,8 +170,6 @@ io.on('connection', socket => {
 
     socket.on('toggleReady', () => {
 
-        console.log('counting ready');
-
         function shuffleArray(array) {
             for (var i = array.length - 1; i > 0; i--) {
                 var j = Math.floor(Math.random() * (i + 1));
@@ -186,49 +180,33 @@ io.on('connection', socket => {
             return array;
         }
 
-        currPlayer.ready = true;
-        socket.broadcast.emit('ready', currPlayer);
+        if (!readyPlayers.find(player => player.userId == currPlayer.userId)) {
 
-        readyPlayers.push(currPlayer);
-        console.log('readyPlayers', readyPlayers);
+            currPlayer.ready = true;
+            socket.broadcast.emit('ready', currPlayer);
 
-        if (readyPlayers.length >= 4) {
-            let shuffledPlayers = shuffleArray(readyPlayers);
+            readyPlayers.push(currPlayer);
+            console.log('readyPlayers', readyPlayers);
 
-            shuffledPlayers[0].role = 'quizzer';
-            shuffledPlayers[1].role = 'guesser';
-            shuffledPlayers[2].role = 'guesser';
-            shuffledPlayers[3].role = 'guesser';
+            if (readyPlayers.length >= 4) {
+                let shuffledPlayers = shuffleArray(readyPlayers);
 
-            console.log('shuffledPlayers', shuffledPlayers);
+                shuffledPlayers[0].role = 'quizzer';
+                shuffledPlayers[1].role = 'guesser';
+                shuffledPlayers[2].role = 'guesser';
+                shuffledPlayers[3].role = 'guesser';
 
-            shuffledPlayers.forEach(player => {
-                io.to(player.socketId).emit('setRole', player);
-            });
+                console.log('shuffledPlayers', shuffledPlayers);
 
+                shuffledPlayers.forEach(player => {
+                    io.to(player.socketId).emit('setRole', player);
+                });
 
+            }
         }
-
-
-
-
-        //
-        // const rndArr = shuffleArray(arrayReady);
-        // console.log(rndArr);
-        //
-        // if (self == rndArr[0]) {
-        //     console.log('quizzer');
-        //     socket.emit('quizzer');
-        //     socket.broadcast('guesser');
-        //     socket.broadcast('quizzerId', self);
-        // } else {
-        //     console.log('guesser');
-        //     socket.emit('guesser');
-        // }
     });
 
     socket.on('setPlayerName', name => {
-        console.log('receiving name on server', name);
         currPlayer.name = name;
         io.emit('changePlayerName', currPlayer);
     });
@@ -238,6 +216,11 @@ io.on('connection', socket => {
         io.emit('currScene', scene);
         currPlayer.role = 'scorer';
         socket.emit('setRole', currPlayer);
+    });
+
+    socket.on('searchedFor', search => {
+        console.log('emit search on server', search);
+        io.emit('searchTerm', search);
     });
 
     socket.on('sendGuess', guess => {
