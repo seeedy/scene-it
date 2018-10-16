@@ -10,7 +10,6 @@ class Round extends React.Component {
         super(props);
         this.state={
             stage: 'round',
-            role: ''
         };
 
     }
@@ -23,7 +22,9 @@ class Round extends React.Component {
             };
         }
         return state;
+
     }
+
 
     render() {
 
@@ -38,6 +39,8 @@ class Round extends React.Component {
         if (this.state.role == 'scorer') {
             return (<Scorer />);
         }
+
+        return <div>no state.role</div>;
 
     }
 

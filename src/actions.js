@@ -96,9 +96,9 @@ export function roundTransition(data) {
     };
 }
 
-export function stageRound() {
+export function stageRound(data) {
     return {
         type: 'STAGE_ROUND',
-        stage: 'round'
+        onlinePlayers: data,
     };
 }

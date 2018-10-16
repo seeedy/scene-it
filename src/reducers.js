@@ -144,7 +144,11 @@ export default function (state = {}, action) {
 
         state = {
             ...state,
-            stage: 'round'
+            onlinePlayers: action.onlinePlayers,
+            stage: 'round',
+            searchTerm: '',
+            scene: '',
+            scenes: ''
         };
     }
 

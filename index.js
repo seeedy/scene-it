@@ -117,6 +117,7 @@ server.listen(8080, function() {
 
 let onlinePlayers = [];
 let readyPlayers = [];
+let shuffledPlayers = [];
 
 
 io.on('connection', socket => {
@@ -191,7 +192,7 @@ io.on('connection', socket => {
             if (readyPlayers.length >= 4) {
 
 
-                let shuffledPlayers = shuffleArray(readyPlayers);
+                shuffledPlayers = shuffleArray(readyPlayers);
 
                 shuffledPlayers[0].role = 'quizzer';
                 shuffledPlayers[1].role = 'guesser';
@@ -203,8 +204,8 @@ io.on('connection', socket => {
                 shuffledPlayers.forEach(player => {
                     io.to(player.socketId).emit('setRole', player);
                 });
-                io.emit('stageRound');
-
+                io.emit('stageRound', shuffledPlayers);
+                readyPlayers = [];
 
             }
         }
@@ -235,15 +236,43 @@ io.on('connection', socket => {
     socket.on('roundWinner', roundWinner => {
         // onlinePlayers.forEach(player => player.role='transition');
 
-        let winner = onlinePlayers.find(player =>
+        let winner = shuffledPlayers.find(player =>
             player.userId == roundWinner.userId);
         winner.score++;
         winner.wonRound = true;
         console.log('players on round transition', onlinePlayers);
 
-        io.emit('transition', onlinePlayers);
-        socket.emit('self', currPlayer);
+        io.emit('transition', shuffledPlayers);
     });
+
+    socket.on('nextRound', () => {
+        readyPlayers.push(currPlayer);
+        console.log('ready for next round', currPlayer);
+        if (readyPlayers.length >= 4) {
+
+            let elem = shuffledPlayers.shift();
+            shuffledPlayers.push(elem);
+
+            shuffledPlayers[0].role = 'quizzer';
+            shuffledPlayers[0].guess = '';
+
+            for (let i = 1; i < 4; i++) {
+                shuffledPlayers[i].role = 'guesser';
+                shuffledPlayers[i].guess = '';
+            }
+
+            console.log('reshuffling', shuffledPlayers);
+            io.emit('stageRound', shuffledPlayers);
+
+            shuffledPlayers.forEach(player => {
+                io.to(player.socketId).emit('self', player);
+            });
+
+            readyPlayers = [];
+
+        }
+    });
+
 
 
     socket.on('disconnect', () => {

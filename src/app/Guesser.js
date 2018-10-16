@@ -121,9 +121,9 @@ class Guesser extends React.Component {
             );
         }
 
-        if (this.state.role == 'transition'){
-            return (<Transition />);
-        }
+        // if (this.state.role == 'transition'){
+        //     return (<Transition />);
+        // }
     }
 }
 

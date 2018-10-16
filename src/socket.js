@@ -51,8 +51,8 @@ export function getSocket(store) {
             store.dispatch(searchTerm(data));
         });
 
-        socket.on('stageRound', () => {
-            store.dispatch(stageRound());
+        socket.on('stageRound', data => {
+            store.dispatch(stageRound(data));
         });
 
     }

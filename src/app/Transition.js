@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { getSocket } from '../socket';
+import { getSocket } from '../socket';
 
 
 
@@ -9,7 +9,7 @@ class Transition extends React.Component {
         super(props);
         this.state={};
 
-
+        this.nextRound = this.nextRound.bind(this);
     }
 
     componentDidMount() {
@@ -17,6 +17,10 @@ class Transition extends React.Component {
             scene: this.props.scene,
             searchTerm: this.props.searchTerm
         });
+    }
+
+    nextRound() {
+        getSocket().emit('nextRound');
     }
 
 
@@ -52,6 +56,8 @@ class Transition extends React.Component {
                         </div>
                     ))}
                 </div>
+
+                <button onClick={this.nextRound}>Next Round</button>
             </div>
         );
     }

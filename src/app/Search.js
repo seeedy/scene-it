@@ -17,6 +17,20 @@ class Search extends React.Component {
         this.keyDown = this.keyDown.bind(this);
     }
 
+    // componentDidMount() {
+    //     document.getElementById("scene-modal").classList.remove("shown");
+    // }
+
+    static getDerivedStateFromProps(props, state) {
+
+        if (props.scene && props.scene != state.scene) {
+            return {
+                scene: props.scene
+            };
+        }
+        return state;
+    }
+
 
     getScenes() {
         this.props.dispatch(getScenes(this.search.value));
@@ -149,7 +163,9 @@ class Search extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        scenes: state.scenes
+        scenes: state.scenes,
+        scene: state.scene,
+        searchTerm: state.searchTerm
     };
 };
 
