@@ -189,6 +189,8 @@ io.on('connection', socket => {
             console.log('readyPlayers', readyPlayers);
 
             if (readyPlayers.length >= 4) {
+
+
                 let shuffledPlayers = shuffleArray(readyPlayers);
 
                 shuffledPlayers[0].role = 'quizzer';
@@ -201,6 +203,8 @@ io.on('connection', socket => {
                 shuffledPlayers.forEach(player => {
                     io.to(player.socketId).emit('setRole', player);
                 });
+                io.emit('stageRound');
+
 
             }
         }
@@ -231,6 +235,8 @@ io.on('connection', socket => {
     socket.on('roundWinner', roundWinner => {
         onlinePlayers.forEach(player => player.role='transition');
 
+
+
         let winner = onlinePlayers.find(player =>
             player.userId == roundWinner.userId);
         winner.score++;
@@ -238,6 +244,7 @@ io.on('connection', socket => {
         console.log('players on round transition', onlinePlayers);
 
         io.emit('transition', onlinePlayers);
+        socket.emit('self', currPlayer);
     });
 
 

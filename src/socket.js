@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { playerJoined, onlinePlayers, userSelf, playerLeft, setRole, currScene, receiveGuess, changePlayerName, roundTransition, searchTerm } from './actions';
+import { playerJoined, onlinePlayers, userSelf, playerLeft, setRole, currScene, receiveGuess, changePlayerName, roundTransition, searchTerm, stageRound } from './actions';
 
 let socket;
 
@@ -48,8 +48,11 @@ export function getSocket(store) {
         });
 
         socket.on('searchTerm', data => {
-            console.log('socket on searchTerm');
             store.dispatch(searchTerm(data));
+        });
+
+        socket.on('stageRound', () => {
+            store.dispatch(stageRound());
         });
 
     }

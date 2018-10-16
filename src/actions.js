@@ -95,3 +95,10 @@ export function roundTransition(data) {
         onlinePlayers: data
     };
 }
+
+export function stageRound() {
+    return {
+        type: 'STAGE_ROUND',
+        stage: 'round'
+    };
+}

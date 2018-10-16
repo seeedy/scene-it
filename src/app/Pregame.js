@@ -2,15 +2,13 @@ import React from 'react';
 // import axios from './axios';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
-import Search from './Search';
-import Guesser from './Guesser';
-import Scorer from './Scorer';
+import Round from './Round';
 
 class Pregame extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            role: ''
+            stage: 'pregame'
         };
 
         this.toggleReady = this.toggleReady.bind(this);
@@ -19,19 +17,14 @@ class Pregame extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
 
-        if (props.self && props.self.role != state.role) {
+        if (props.stage && props.stage != state.stage) {
             return {
-                role: props.self.role,
+                stage: props.stage,
             };
         }
         return state;
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.self.name != prevProps.self.name) {
-    //         //
-    //     }
-    // }
 
     setPlayerName(e) {
         if (e.keyCode === 13) {
@@ -56,7 +49,7 @@ class Pregame extends React.Component {
         const { self } = this.props;
 
         if (!onlinePlayers) {
-            return <div>sdkufgisfg</div>;
+            return null;
         }
 
         if (!self) {
@@ -65,7 +58,7 @@ class Pregame extends React.Component {
 
         const otherPlayers = onlinePlayers.filter(player => player.userId != self.userId);
 
-        if (!this.state.role) {
+        if (this.state.stage == 'pregame') {
             return(
                 <div id="pregame-wrapper">
                     <h1>Scene it?</h1>
@@ -152,22 +145,9 @@ class Pregame extends React.Component {
             );
         }
 
-        if (this.state.role == 'quizzer') {
-            return (<Search />);
+        if (this.state.stage == 'round') {
+            return (<Round />);
         }
-
-        if (this.state.role == 'guesser') {
-            return (<Guesser />);
-        }
-
-        if (this.state.role == 'scorer') {
-            return (<Scorer />);
-        }
-
-
-
-
-
 
 
     }
@@ -180,6 +160,7 @@ const mapStateToProps = state => {
     return {
         onlinePlayers: state.onlinePlayers,
         self: state.self,
+        stage: state.stage
     };
 };
 
