@@ -4,6 +4,7 @@ import Search from './Search';
 import Guesser from './Guesser';
 import Scorer from './Scorer';
 
+
 class Round extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +19,7 @@ class Round extends React.Component {
 
         if (props.self && props.self.role != state.role) {
             return {
-                role: props.self.role,
+                role: props.self.role
             };
         }
         return state;

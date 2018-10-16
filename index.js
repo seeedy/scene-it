@@ -233,9 +233,7 @@ io.on('connection', socket => {
     });
 
     socket.on('roundWinner', roundWinner => {
-        onlinePlayers.forEach(player => player.role='transition');
-
-
+        // onlinePlayers.forEach(player => player.role='transition');
 
         let winner = onlinePlayers.find(player =>
             player.userId == roundWinner.userId);

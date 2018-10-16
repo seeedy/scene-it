@@ -135,7 +135,7 @@ export default function (state = {}, action) {
         state = {
             ...state,
             onlinePlayers: action.onlinePlayers,
-            role: 'transition'
+            stage: 'transition'
         };
     }
 

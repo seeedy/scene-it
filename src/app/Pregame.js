@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
 import Round from './Round';
+import Transition from './Transition';
 
 class Pregame extends React.Component {
     constructor(props) {
@@ -147,6 +148,10 @@ class Pregame extends React.Component {
 
         if (this.state.stage == 'round') {
             return (<Round />);
+        }
+
+        if (this.state.stage == 'transition') {
+            return (<Transition />);
         }
 
 
