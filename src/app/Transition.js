@@ -7,17 +7,45 @@ import { getSocket } from '../socket';
 class Transition extends React.Component {
     constructor(props) {
         super(props);
-        this.state={};
+        this.state={
+            timer: 20
+        };
 
         this.nextRound = this.nextRound.bind(this);
+
+        this.count;
+        this.tick = this.tick.bind(this);
+        this.startTimer = this.startTimer.bind(this);
     }
 
     componentDidMount() {
         this.setState({
             scene: this.props.scene,
-            searchTerm: this.props.searchTerm
+            searchTerm: this.props.searchTerm,
         });
+
+        this.startTimer();
     }
+
+    startTimer() {
+        this.count = this.state.timer;
+        this.intervalHandle = setInterval(this.tick, 1000);
+    }
+
+    tick() {
+
+        this.count--;
+        this.setState({
+            timer: this.count
+        });
+
+        if (this.count == 0) {
+            console.log('next round');
+            clearInterval(this.intervalHandle);
+            getSocket().emit('nextRound');
+        }
+    }
+
 
     nextRound() {
         getSocket().emit('nextRound');
@@ -58,6 +86,7 @@ class Transition extends React.Component {
                 </div>
 
                 <button onClick={this.nextRound}>Next Round</button>
+                <div>{this.state.timer}</div>
             </div>
         );
     }
