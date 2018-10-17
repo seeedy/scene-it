@@ -6,10 +6,10 @@ import axios from './axios';
 export async function getScenes(search) {
 
     const response = await axios.get('/search/' + search);
-    const scenesData = response.data;
+    const { data } = response;
     return {
         type: 'GET_SCENES',
-        scenes: scenesData
+        scenes: data
     };
 
 }

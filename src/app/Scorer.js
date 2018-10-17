@@ -86,6 +86,7 @@ class Scorer extends React.Component {
 
 
                     <div id="scorer-wrapper">
+                        <p>Waiting for guesses...</p>
 
 
                         <div className="player-wrapper">
@@ -119,11 +120,6 @@ class Scorer extends React.Component {
                             </div>
                         </div>
 
-
-
-
-
-
                         <div id="incoming-guesses">
 
                             {otherPlayers.map(player => (
@@ -155,9 +151,6 @@ class Scorer extends React.Component {
             );
         }
 
-        if (this.state.role == 'transition') {
-            return (<Transition />);
-        }
     }
 }
 
@@ -169,7 +162,7 @@ const mapStateToProps = state => {
         scene: state.scene,
         onlinePlayers: state.onlinePlayers,
         self: state.self,
-        role: state.role
+        role: state.self.role
     };
 };
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
-import Transition from './Transition';
-
 
 
 class Guesser extends React.Component {
@@ -107,7 +105,7 @@ class Guesser extends React.Component {
                                 onKeyDown={this.sendGuess}
                                 placeholder="Guess the movie"
                             />
-                            <button className="guess-btn" onClick={this.btnClick}>
+                            <button className="guess-btn" onClick={this.sendGuess}>
                                 <i className="fas fa-paper-plane"></i>
                             </button>
                         </div>
@@ -121,9 +119,6 @@ class Guesser extends React.Component {
             );
         }
 
-        // if (this.state.role == 'transition'){
-        //     return (<Transition />);
-        // }
     }
 }
 

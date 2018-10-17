@@ -40,9 +40,8 @@ class Transition extends React.Component {
         });
 
         if (this.count == 0) {
-            console.log('next round');
             clearInterval(this.intervalHandle);
-            getSocket().emit('nextRound');
+            this.nextRound();
         }
     }
 
@@ -61,17 +60,17 @@ class Transition extends React.Component {
         }
 
         const winner = onlinePlayers.find(player => player.wonRound === true);
-        console.log(winner);
+        const scorer = onlinePlayers.find(player => player.role == 'scorer');
 
 
 
         return (
             <div id="transition-wrapper">
                 {winner && <div id="winner">
-                    <p>This was a scene from {this.state.searchTerm}. </p>
+                    <p>{scorer.name} chose a scene from &#34;{this.state.searchTerm}&#34;. </p>
                     <p>{winner.name} won this round!</p>
                     <img src={this.state.scene} className="winner-img" />
-                    Winning answer: {winner.guess}
+                    <p>Winning answer: &#34;{winner.guess}&#34;</p>
                 </div>}
 
 
@@ -85,8 +84,7 @@ class Transition extends React.Component {
                     ))}
                 </div>
 
-                <button onClick={this.nextRound}>Next Round</button>
-                <div>{this.state.timer}</div>
+                <div>Next round starts in <span>{this.state.timer}</span></div>
             </div>
         );
     }

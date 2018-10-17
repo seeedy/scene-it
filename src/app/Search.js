@@ -17,10 +17,6 @@ class Search extends React.Component {
         this.keyDown = this.keyDown.bind(this);
     }
 
-    // componentDidMount() {
-    //     document.getElementById("scene-modal").classList.remove("shown");
-    // }
-
     static getDerivedStateFromProps(props, state) {
 
         if (props.scene && props.scene != state.scene) {

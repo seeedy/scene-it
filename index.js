@@ -100,9 +100,9 @@ app.get('/search/:movie', (req, res) => {
 
 
 
-
-///////////////////////////////////////////////////////////////////////////////////// DONT TOUCH //////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+/////////////////////// DONT TOUCH ///////////////////////////////
+//////////////////////////////////////////////////////////////////
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -130,35 +130,15 @@ io.on('connection', socket => {
     const currPlayer = {
         socketId: socket.id,
         userId: socket.request.session.uid,
-        // name: '',
-        // color: '',
         role: '',
         score: 0
     };
 
 
-
-    // for (let i = 0; i < onlinePlayers.length; i++) {
-    //     if (onlinePlayers[i].userId == socket.request.session.uid) {
-    //         uniquePlayer = false;
-    //     }
-    // }
-    //
-    // if (uniquePlayer === true) {
-    //     onlinePlayers.push(currPlayer);
-    //     socket.broadcast.emit('playerJoined', currPlayer);
-    // }
-
     if (!onlinePlayers.find(player => player.userId == currPlayer.userId)) {
         onlinePlayers.push(currPlayer);
         socket.broadcast.emit('playerJoined', currPlayer);
     }
-
-    // if (!Object.values(onlineUsers).includes(userId)) {
-    //     onlineUsers[socketId] = userId;
-    //     socket.broadcast.emit('userJoined', userId);
-    // }
-    // let arrayOfIds = Object.values(onlineUsers);
 
 
     if (onlinePlayers.length < 5) {
@@ -234,7 +214,6 @@ io.on('connection', socket => {
     });
 
     socket.on('roundWinner', roundWinner => {
-        // onlinePlayers.forEach(player => player.role='transition');
 
         let winner = shuffledPlayers.find(player =>
             player.userId == roundWinner.userId);
