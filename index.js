@@ -20,7 +20,7 @@ app.use(express.static('./public'));
 app.use(require('body-parser').json());
 
 const cookieSessionMiddleware = cookieSession({
-    secret: secrets.secret,
+    secret: process.env.SESSION_SECRET || secrets.secret,
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 app.use(cookieSessionMiddleware);
