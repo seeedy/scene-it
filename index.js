@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const compression = require('compression');
 const cookieSession = require('cookie-session');
-const secrets = require('./secrets.json');
 const server = require('http').Server(app);
 // add back origin after testing
 const io = require('socket.io')(server, {});
@@ -11,6 +10,7 @@ const csurf = require('csurf');
 // we require the standard axios here instead of importing from component, as we dont have form fields on the browser
 const axios = require('axios');
 const uidSafe = require('uid-safe');
+let secrets;
 
 
 
@@ -32,6 +32,7 @@ app.use(csurf());
 
 
 if (process.env.NODE_ENV != 'production') {
+    secrets = require('./secrets.json');
     app.use(
         '/bundle.js',
         require('http-proxy-middleware')({
