@@ -1,6 +1,4 @@
-# final-project: 
-
-*** SCENE IT ***
+# scene-it
 
 Multiplayer online game for movie connoisseurs. Four players take turns choosing a movie scene and having the other players guess the correct film. 
 
