@@ -3,18 +3,19 @@ const app = express();
 const compression = require('compression');
 const cookieSession = require('cookie-session');
 const server = require('http').Server(app);
-// add back origin after testing
 const io = require('socket.io')(server, {});
 const csurf = require('csurf');
-// const axios = require('./src/axios');
-// we require the standard axios here instead of importing from component, as we dont have form fields on the browser
+// we require the standard axios here instead of importing from component as we dont have form fields
 const axios = require('axios');
 const uidSafe = require('uid-safe');
 let secrets;
 
 
+/////////////////////////////////////////////////////////////////////
+//////////////////// MIDDLEWARE /////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
-
+// use compression middleware for performance optimization
 app.use(compression());
 app.use(express.static('./public'));
 app.use(require('body-parser').json());
@@ -24,11 +25,13 @@ const cookieSessionMiddleware = cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 app.use(cookieSessionMiddleware);
+
 io.use(function(socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
-app.use(csurf());
 
+// CSRF protection middleware
+app.use(csurf());
 
 
 if (process.env.NODE_ENV != 'production') {
@@ -43,9 +46,6 @@ if (process.env.NODE_ENV != 'production') {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-/////////////////////////////////////////////////////////////////////
-//////////////////// MIDDLEWARE /////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 
 app.use((req, res, next) => {
     res.cookie('mytoken', req.csrfToken());
@@ -63,8 +63,11 @@ app.use((req, res, next) => {
 //////////////////////////////////////////////////////////////////////
 //////////////////////// ROUTES /////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-app.get('/search/:movie', (req, res) => {
 
+// get 20 images from Google CSE API
+// requests limited to return 10 images
+// make two axios requests to get 2x10 images and concat
+app.get('/search/:movie', (req, res) => {
     const url = 'https://www.googleapis.com/customsearch/v1?';
     let params1;
 
@@ -88,7 +91,6 @@ app.get('/search/:movie', (req, res) => {
         return axios.get(url, params2);
     };
 
-
     axios.all([getFirstResults(), getNextResults()])
         .then(response => {
             const data = response[0].data.items.concat(response[1].data.items);
@@ -99,11 +101,6 @@ app.get('/search/:movie', (req, res) => {
 });
 
 
-
-
-///////////////////////////////////////////////////////////////////
-/////////////////////// DONT TOUCH ///////////////////////////////
-//////////////////////////////////////////////////////////////////
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -120,9 +117,8 @@ let onlinePlayers = [];
 let readyPlayers = [];
 let shuffledPlayers = [];
 
-
+// new player joining
 io.on('connection', socket => {
-    console.log(`${socket.id} has connected`);
 
     if (!socket.request.session || !socket.request.session.uid) {
         return socket.disconnect(true);
@@ -135,115 +131,113 @@ io.on('connection', socket => {
         score: 0
     };
 
-
+    // check if player already exists, if not -> broadcast new player join to other players
     if (!onlinePlayers.find(player => player.userId == currPlayer.userId)) {
         onlinePlayers.push(currPlayer);
         socket.broadcast.emit('playerJoined', currPlayer);
     }
 
-
+    // update array of players and self
     if (onlinePlayers.length < 5) {
         socket.emit('onlinePlayers', onlinePlayers);
         socket.emit('self', currPlayer);
     }
-    ////////////////////////////////////////////////
-    // add else case to show waiting room page ////
-    ///////////////////////////////////////////////
+    // todo: add else case to show waiting room page
 
-    socket.on('toggleReady', () => {
-
-        function shuffleArray(array) {
-            for (var i = array.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-            return array;
-        }
-
-        if (!readyPlayers.find(player => player.userId == currPlayer.userId)) {
-
-            currPlayer.ready = true;
-            socket.broadcast.emit('ready', currPlayer);
-
-            readyPlayers.push(currPlayer);
-            console.log('readyPlayers', readyPlayers);
-
-            if (readyPlayers.length >= 4) {
-
-
-                shuffledPlayers = shuffleArray(readyPlayers);
-
-                shuffledPlayers[0].role = 'quizzer';
-                shuffledPlayers[1].role = 'guesser';
-                shuffledPlayers[2].role = 'guesser';
-                shuffledPlayers[3].role = 'guesser';
-
-                console.log('shuffledPlayers', shuffledPlayers);
-
-                shuffledPlayers.forEach(player => {
-                    io.to(player.socketId).emit('setRole', player);
-                });
-                io.emit('stageRound', shuffledPlayers);
-                readyPlayers = [];
-
-            }
-        }
-    });
-
+    // Emit current player name to other players
     socket.on('setPlayerName', name => {
         currPlayer.name = name;
         io.emit('changePlayerName', currPlayer);
     });
 
+    // player clicks on "ready"
+    socket.on('toggleReady', () => {
 
+        // check for unique ready player and add to array
+        if (!readyPlayers.find(player => player.userId == currPlayer.userId)) {
+
+            currPlayer.ready = true;
+            socket.broadcast.emit('ready', currPlayer);
+            readyPlayers.push(currPlayer);
+
+            // all four players ready
+            if (readyPlayers.length >= 4) {
+                // function to randomize player order
+                function shuffleArray(array) {
+                    for (var i = array.length - 1; i > 0; i--) {
+                        var j = Math.floor(Math.random() * (i + 1));
+                        var temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
+                    return array;
+                }
+                // set role for each player (quizzer / guesser)
+                shuffledPlayers = shuffleArray(readyPlayers);
+                shuffledPlayers[0].role = 'quizzer';
+                shuffledPlayers[1].role = 'guesser';
+                shuffledPlayers[2].role = 'guesser';
+                shuffledPlayers[3].role = 'guesser';
+
+                shuffledPlayers.forEach(player => {
+                    io.to(player.socketId).emit('setRole', player);
+                });
+                // start first guessing round
+                io.emit('stageRound', shuffledPlayers);
+                readyPlayers = [];
+            }
+        }
+    });
+
+    // emit chosen scene to other players and change role to scorer
     socket.on('chooseScene', scene => {
         io.emit('currScene', scene);
         currPlayer.role = 'scorer';
         socket.emit('setRole', currPlayer);
     });
 
+    // keep track of search term for later scoring screen
     socket.on('searchedFor', search => {
         console.log('emit search on server', search);
         io.emit('searchTerm', search);
     });
 
+    // emit guesses to scorer
     socket.on('sendGuess', guess => {
         currPlayer.guess = guess;
         socket.broadcast.emit('receiveGuess', currPlayer);
     });
 
+    // score winning answer
     socket.on('roundWinner', roundWinner => {
-
         let winner = shuffledPlayers.find(player =>
             player.userId == roundWinner.userId);
         winner.score++;
         winner.wonRound = true;
-        console.log('players on round transition', onlinePlayers);
-
         io.emit('transition', shuffledPlayers);
     });
 
+
+    // start next round
     socket.on('nextRound', () => {
         readyPlayers.push(currPlayer);
-        console.log('ready for next round', currPlayer);
+
         if (readyPlayers.length >= 4) {
 
+            // switch quizzer role to next player
             let elem = shuffledPlayers.shift();
             shuffledPlayers.push(elem);
-
             shuffledPlayers[0].role = 'quizzer';
             shuffledPlayers[0].guess = '';
-
+            // guesser role for other three players
             for (let i = 1; i < 4; i++) {
                 shuffledPlayers[i].role = 'guesser';
                 shuffledPlayers[i].guess = '';
             }
 
-            console.log('reshuffling', shuffledPlayers);
+            // emit for next round start
             io.emit('stageRound', shuffledPlayers);
-
+            // set self correctly for each player
             shuffledPlayers.forEach(player => {
                 io.to(player.socketId).emit('self', player);
             });
@@ -252,18 +246,16 @@ io.on('connection', socket => {
 
         }
     });
-
-
-
+    
+    // player leaving
     socket.on('disconnect', () => {
-        // delete onlineUsers[socketId];
         console.log(`${socket.id} has disconnected`);
-
+        // check if unique
         if (onlinePlayers.find(player =>
             player.socketId == currPlayer.socketId)) {
 
             socket.broadcast.emit('playerLeft', currPlayer);
-
+            // remove from player array
             onlinePlayers = onlinePlayers.filter(player =>
                 player.socketId != currPlayer.socketId);
         }

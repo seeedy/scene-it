@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
 
-
-
 class Transition extends React.Component {
     constructor(props) {
         super(props);
@@ -11,11 +9,10 @@ class Transition extends React.Component {
             timer: 20
         };
 
-        this.nextRound = this.nextRound.bind(this);
-
         this.count;
         this.tick = this.tick.bind(this);
         this.startTimer = this.startTimer.bind(this);
+        this.nextRound = this.nextRound.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +20,7 @@ class Transition extends React.Component {
             scene: this.props.scene,
             searchTerm: this.props.searchTerm,
         });
-
+        // start 20 sec countdown
         this.startTimer();
     }
 
@@ -33,7 +30,7 @@ class Transition extends React.Component {
     }
 
     tick() {
-
+        // set state after each tick to re-render
         this.count--;
         this.setState({
             timer: this.count
@@ -45,11 +42,9 @@ class Transition extends React.Component {
         }
     }
 
-
     nextRound() {
         getSocket().emit('nextRound');
     }
-
 
     render() {
 
@@ -61,7 +56,6 @@ class Transition extends React.Component {
 
         const winner = onlinePlayers.find(player => player.wonRound === true);
         const scorer = onlinePlayers.find(player => player.role == 'scorer');
-
 
 
         return (
@@ -90,7 +84,7 @@ class Transition extends React.Component {
     }
 }
 
-
+// Redux
 const mapStateToProps = state => {
     return {
         scene: state.scene,
@@ -99,6 +93,5 @@ const mapStateToProps = state => {
         searchTerm: state.searchTerm
     };
 };
-
 
 export default connect(mapStateToProps)(Transition);

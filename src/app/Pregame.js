@@ -1,5 +1,4 @@
 import React from 'react';
-// import axios from './axios';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
 import Round from './Round';
@@ -26,19 +25,15 @@ class Pregame extends React.Component {
         return state;
     }
 
-
     setPlayerName(e) {
         if (e.keyCode === 13) {
-            console.log(e.target.value);
             getSocket().emit('setPlayerName', e.target.value);
             this.btn.classList.remove("hidden");
             this.input.classList.add("hidden");
         }
     }
 
-
     toggleReady() {
-        console.log('emitting ready to server');
         getSocket().emit('toggleReady');
         this.btn.classList.add("hidden");
         this.ready.classList.remove("hidden");
@@ -153,14 +148,10 @@ class Pregame extends React.Component {
         if (this.state.stage == 'transition') {
             return (<Transition />);
         }
-
-
     }
-
 }
 
-
-
+// Redux
 const mapStateToProps = state => {
     return {
         onlinePlayers: state.onlinePlayers,
@@ -168,6 +159,5 @@ const mapStateToProps = state => {
         stage: state.stage
     };
 };
-
 
 export default connect(mapStateToProps)(Pregame);

@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
-import Transition from './Transition';
-
-
 
 class Scorer extends React.Component {
     constructor(props) {
@@ -28,7 +25,6 @@ class Scorer extends React.Component {
     }
 
 
-
     showModal(player) {
         this.setState({
             winner: player
@@ -41,12 +37,10 @@ class Scorer extends React.Component {
         document.getElementById("scorer-modal").classList.remove("shown");
     }
 
-
     pickWinner() {
         getSocket().emit('roundWinner', this.state.winner);
         document.getElementById("scorer-modal").classList.remove("shown");
     }
-
 
     render() {
 
@@ -141,22 +135,16 @@ class Scorer extends React.Component {
                                 </div>
                             ))}
 
-
-
                         </div>
                     </div>
                 </div>
-
-
             );
         }
-
     }
 }
 
 
-
-
+// Redux
 const mapStateToProps = state => {
     return {
         scene: state.scene,
