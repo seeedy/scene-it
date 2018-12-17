@@ -20,17 +20,12 @@ app.use(compression());
 app.use(express.static('./public'));
 app.use(require('body-parser').json());
 
-// CSRF protection
-app.use(csurf());
-
 // production or local
 if (process.env.NODE_ENV != 'production') {
     secrets = require('./secrets.json');
-    app.use(
-        '/bundle.js',
-        require('http-proxy-middleware')({
-            target: 'http://localhost:8081/'
-        })
+    app.use('/bundle.js', require('http-proxy-middleware')({
+        target: 'http://localhost:8081/'
+    })
     );
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
@@ -47,6 +42,8 @@ io.use(function(socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
 
+// CSRF protection
+app.use(csurf());
 
 app.use((req, res, next) => {
     res.cookie('mytoken', req.csrfToken());
