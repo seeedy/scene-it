@@ -20,20 +20,10 @@ app.use(compression());
 app.use(express.static('./public'));
 app.use(require('body-parser').json());
 
-const cookieSessionMiddleware = cookieSession({
-    secret: process.env.SESSION_SECRET || secrets.secret,
-    maxAge: 1000 * 60 * 60 * 24 * 90
-});
-app.use(cookieSessionMiddleware);
-
-io.use(function(socket, next) {
-    cookieSessionMiddleware(socket.request, socket.request.res, next);
-});
-
-// CSRF protection middleware
+// CSRF protection
 app.use(csurf());
 
-
+// production or local
 if (process.env.NODE_ENV != 'production') {
     secrets = require('./secrets.json');
     app.use(
@@ -45,6 +35,17 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
+
+// session cookie
+const cookieSessionMiddleware = cookieSession({
+    secret: process.env.SESSION_SECRET || secrets.secret,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+app.use(cookieSessionMiddleware);
+
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 
 app.use((req, res, next) => {
@@ -246,7 +247,7 @@ io.on('connection', socket => {
 
         }
     });
-    
+
     // player leaving
     socket.on('disconnect', () => {
         console.log(`${socket.id} has disconnected`);
