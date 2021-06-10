@@ -1,449 +1,438 @@
 * {
-    margin: 0;
-    box-sizing: border-box;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-height: 100vh;
 }
 
 main {
-    position: absolute;
-    min-height: 100%;
-    min-width: 100%;
-    background-image: url("/img/curtains.jpg");
-    background-size: cover;
-    background-position: center;
-    font-family: 'Noto Serif JP', sans-serif;
+  position: absolute;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-y: hidden;
+  background-image: url('/img/curtains.jpg');
+  background-size: cover;
+  background-position: center;
+  font-family: 'Noto Serif JP', sans-serif;
 }
 
 .hidden {
-    transform: translateY(10000px);
+  transform: translateY(10000px);
 }
 
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
 /******************* SEARCH *********************************/
 
 #outer-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow-y: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 #search-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
 }
 
-
 #search-bar {
-    border: 1px solid dimgrey;
-    background: white;
-    padding: 5px;
-    border-radius: 25px;
+  border: 1px solid dimgrey;
+  background: white;
+  padding: 5px;
+  border-radius: 25px;
 }
 
 #search-input {
-    border: none;
-    padding: 2px 24px 2px 12px;
+  border: none;
+  padding: 2px 24px 2px 12px;
 }
 
 #search-input:focus {
-    outline: none;
+  outline: none;
 }
 
 #search-btn {
-    border: none;
-    background: none;
-    font-size: 1.2em;
-    cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
-
 #search-results {
-    position: absolute;
-    top: 150px;
-    height: 450px;
-    width: 72%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow-y: auto;
+  position: absolute;
+  top: 150px;
+  height: 450px;
+  width: 72%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: auto;
 }
 
 .result-img {
-    width: 300px;
-    height: 169px;
-    border-radius: 10px;
-    object-fit: cover;
-    object-position: center;
-    cursor: pointer;
-    box-shadow: 1px 2px 3px dimgrey;
-    margin: 10px;
+  width: 300px;
+  height: 169px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+  box-shadow: 1px 2px 3px dimgrey;
+  margin: 10px;
 }
-
 
 /****************** MODAL ***************************/
 #scene-modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(100, 100, 100, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99;
-    transform: translateX(10000px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(100, 100, 100, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  transform: translateX(10000px);
 }
 
 #scene-modal.shown {
-    transform: translateX(0);
+  transform: translateX(0);
 }
-
-
 
 .img-preview {
-    width: 640px;
-    height: 360px;
-    border-radius: 20px;
-    object-fit: cover;
-    object-position: center;
+  width: 640px;
+  height: 360px;
+  border-radius: 20px;
+  object-fit: cover;
+  object-position: center;
 }
 
-
 .preview-buttons-box {
-    background: black;
-    padding: 0 20px 10px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2em;
+  background: black;
+  padding: 0 20px 10px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
 }
 
 .preview-buttons-box button {
-    background: none;
-    border: none;
-    font-size: 2.5em;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 2.5em;
+  cursor: pointer;
 }
-
 
 /************************ PREGAME ***********************/
 
 #pregame-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* overflow-y: hidden; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* overflow-y: hidden; */
 }
 
 #pregame-wrapper h1 {
-    font-family: 'Lobster', cursive;
-    margin-top: 50px;
-    margin-bottom: 60px;
-    font-size: 70px;
+  font-family: 'Lobster', cursive;
+  margin-top: 50px;
+  margin-bottom: 60px;
+  font-size: 70px;
 }
 
 #name-input {
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
-    border-left: none;
-    border-right: none;
-    background: none;
-    padding: 10px 0;
-    text-align: center;
-    /* font-family: 'Special Elite', cursive; */
-    font-size: 1.05rem;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  border-left: none;
+  border-right: none;
+  background: none;
+  padding: 10px 0;
+  text-align: center;
+  /* font-family: 'Special Elite', cursive; */
+  font-size: 1.05rem;
 }
 
 #name-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .rdy-btn {
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 10px 30px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-family: 'Noto Serif JP', sans-serif;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    box-shadow: 2px 2px 2px grey;
-
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 30px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: 'Noto Serif JP', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 2px grey;
 }
 
 .rdy-btn:hover {
-    transform: translateY(2px);
-    box-shadow: none;
+  transform: translateY(2px);
+  box-shadow: none;
 }
 
 .ready {
-    margin-top: 20px;
-    font-weight: bold;
+  margin-top: 20px;
+  font-weight: bold;
 }
 
 #online-players {
-    position: relative;
-    /* width: 100%; */
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
+  position: relative;
+  /* width: 100%; */
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
 }
 
 .player-outside {
-    background: black;
-    padding: 10px;
+  background: black;
+  padding: 10px;
 }
 
 .self-player,
 .other-player {
-    height: 230px;
-    width: 230px;
-    background: white;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Special Elite', cursive;
-    font-size: 1.5em;
-    overflow-wrap: break-word;
+  height: 230px;
+  width: 230px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Special Elite', cursive;
+  font-size: 1.5em;
+  overflow-wrap: break-word;
 }
 
 #filmroll-top,
 #filmroll-btm {
-    height: 50px;
-    width: 100%;
-    background: black;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  height: 50px;
+  width: 100%;
+  background: black;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 #filmroll-top {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 #filmroll-btm {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .perforations {
-    width: 30px;
-    height: 35px;
-    background: white;
-    border-radius: 5px;
+  width: 30px;
+  height: 35px;
+  background: white;
+  border-radius: 5px;
 }
-
-
 
 /*************************** GUESSER ************************/
 
 #game-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 #guesser-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .guess-img {
-    width: 640px;
-    height: 360px;
-    border-radius: 10px;
+  width: 640px;
+  height: 360px;
+  border-radius: 10px;
 }
 
 #guess-bar {
-    border: 1px solid dimgrey;
-    background: white;
-    padding: 5px 14px 5px 5px;
-    border-radius: 25px;
-    margin-top: 20px;
+  border: 1px solid dimgrey;
+  background: white;
+  padding: 5px 14px 5px 5px;
+  border-radius: 25px;
+  margin-top: 20px;
 }
 
 #guess-input {
-    border: none;
-    padding: 2px 24px 2px 12px;
+  border: none;
+  padding: 2px 24px 2px 12px;
 }
 
 .fa-paper-plane {
-    color: black;
+  color: black;
 }
 
 .guess-btn {
-    border: none;
-    background: none;
-    font-size: 1.1em;
-    cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 1.1em;
+  cursor: pointer;
 }
 
 /*********************** SCORER *******************************/
 
-
 #scorer-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    padding-top: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding-top: 30px;
 }
 
 #incoming-guesses {
-    height: 200px;
-    width: 640px;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    padding: 0 10px;
+  height: 200px;
+  width: 640px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
 }
 
 .player-guess {
-    display: flex;
-    flex-direction: column;
-    margin: 5px 0;
-    padding: 5px 10px;
-    background: darkslategrey;
-    border-radius: 10px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+  padding: 5px 10px;
+  background: darkslategrey;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .player-guess:hover {
-    background: green;
+  background: green;
 }
 
 .guesser-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .guesser-name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .guess-text {
-    overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .after-guess {
-    position: absolute;
-    top: 600px;
-    color: white;
+  position: absolute;
+  top: 600px;
+  color: white;
 }
 
-
 #scorer-modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(100, 100, 100, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99;
-    transform: translateX(10000px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(100, 100, 100, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  transform: translateX(10000px);
 }
 
 #scorer-modal.shown {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 #pick-winner {
-    background: black;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
+  background: black;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .buttons-box {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .buttons-box button {
-    background: none;
-    border: none;
-    font-size: 2.5em;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 2.5em;
+  cursor: pointer;
 }
-
 
 .fa-check-circle {
-    color: green;
-    /* font-size: 2em; */
+  color: green;
+  /* font-size: 2em; */
 }
 
-.fa-times-circle  {
-    color: red;
-    /* font-size: 2em; */
+.fa-times-circle {
+  color: red;
+  /* font-size: 2em; */
 }
 
 /************************ TRANSITION ***************************/
 
 #transition-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 60px;
-    font-size: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+  font-size: 1.5rem;
 }
 
 #winner {
-    padding-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-weight: bold;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
 }
 
 .winner-img {
-    width: 300px;
-    height: 169px;
-    border-radius: 10px;
-    object-fit: cover;
-    object-position: center;
-    margin: 10px;
+  width: 300px;
+  height: 169px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+  margin: 10px;
 }
 
 #score-board {
-    width: 300px;
+  width: 300px;
 }
 
-
-
-
 .player-score {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
