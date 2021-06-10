@@ -1,5 +1,5 @@
 import Pregame from './Pregame/Pregame';
-import Guesser from '/Guesser/Guesser';
+import Guesser from './Guesser/Guesser';
 import Round from './Round/Round';
 import Scorer from './Scorer/Scorer';
 import Search from './Search/Search';

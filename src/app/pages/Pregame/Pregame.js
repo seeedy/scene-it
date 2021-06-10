@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../../../socket';
 import { Round, Transition } from '../';
+import { Filmroll } from '../../components';
 
 class Pregame extends React.Component {
   constructor(props) {
@@ -38,8 +39,7 @@ class Pregame extends React.Component {
   }
 
   render() {
-    const { onlinePlayers } = this.props;
-    const { self } = this.props;
+    const { onlinePlayers, self } = this.props;
 
     if (!onlinePlayers) {
       return null;
@@ -58,52 +58,7 @@ class Pregame extends React.Component {
         <div id='pregame-wrapper'>
           <h1>Scene it?</h1>
           <div id='online-players'>
-            <div className='player-wrapper'>
-              <div id='filmroll-top'>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-              </div>
-              <div className='player-outside'>
-                <div className='self-player'>
-                  <div className='self-name'>{self.name}</div>
-
-                  <div
-                    className={`ready hidden`}
-                    ref={(ready) => (this.ready = ready)}
-                  >
-                    <p>I&apos;M READY!</p>
-                  </div>
-
-                  <input
-                    type='text'
-                    placeholder='Enter your name'
-                    onKeyDown={this.setPlayerName}
-                    ref={(input) => (this.input = input)}
-                    id='name-input'
-                  />
-
-                  <button
-                    className={`rdy-btn hidden`}
-                    onClick={this.toggleReady}
-                    ref={(btn) => (this.btn = btn)}
-                  >
-                    Ready
-                  </button>
-                </div>
-              </div>
-              <div id='filmroll-btm'>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-                <div className='perforations'></div>
-              </div>
-            </div>
+            <Filmroll name={self.name} />
 
             {otherPlayers.map((player) => (
               <div className='player-wrapper' key={player.userId}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getSocket } from '../socket';
+import { getSocket } from '../../../socket';
 
 class Transition extends React.Component {
   constructor(props) {

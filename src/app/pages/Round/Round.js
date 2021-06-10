@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Search from '../../Search';
-import Guesser from './Guesser';
-import Scorer from '../../Scorer';
+import { Search, Guesser, Scorer } from '../';
 
 class Round extends React.Component {
   constructor(props) {

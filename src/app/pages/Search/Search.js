@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getScenes } from '../actions';
-import { getSocket } from '../socket';
+import { getScenes } from '../../../actions';
+import { getSocket } from '../../../socket';
 
 class Search extends React.Component {
   constructor(props) {
