@@ -24,10 +24,11 @@ class Pregame extends React.Component {
     return state;
   }
 
-  setPlayerName(e, value) {
-    console.log('set player name', e.keyCode, value);
+  setPlayerName(e) {
     if (e.keyCode === 13) {
-      getSocket().emit('setPlayerName', value);
+      getSocket().emit('setPlayerName', e.target.value);
+      this.btn.classList.remove('hidden');
+      this.input.classList.add('hidden');
     }
   }
 
@@ -57,35 +58,43 @@ class Pregame extends React.Component {
         <div id='pregame-wrapper'>
           <h1>Scene it?</h1>
           <div id='online-players'>
-            <Filmroll name={self.name} setPlayerName={this.setPlayerName} />
+            <Filmroll>
+              <div className='self-player'>
+                <div className='self-name'>{self.name}</div>
+
+                <div
+                  className={`ready hidden`}
+                  ref={(ready) => (this.ready = ready)}
+                >
+                  <p>I&apos;M READY!</p>
+                </div>
+
+                <input
+                  type='text'
+                  placeholder='Enter your name'
+                  onKeyDown={this.setPlayerName}
+                  ref={(input) => (this.input = input)}
+                  id='name-input'
+                />
+
+                <button
+                  className={`rdy-btn hidden`}
+                  onClick={this.toggleReady}
+                  ref={(btn) => (this.btn = btn)}
+                >
+                  Ready
+                </button>
+              </div>
+            </Filmroll>
 
             {otherPlayers.map((player) => (
-              <div className='player-wrapper' key={player.userId}>
-                <div id='filmroll-top'>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                </div>
-                <div className='player-outside'>
-                  <div className='other-player'>
-                    {player.name || 'Player joined'}
+              <Filmroll key={player.userId}>
+                <div className='other-player'>
+                  {player.name || 'Player joined'}
 
-                    <div className='ready'>{player.ready && <p>READY!</p>}</div>
-                  </div>
+                  <div className='ready'>{player.ready && <p>READY!</p>}</div>
                 </div>
-
-                <div id='filmroll-btm'>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                  <div className='perforations'></div>
-                </div>
-              </div>
+              </Filmroll>
             ))}
           </div>
         </div>
