@@ -43,14 +43,16 @@
         "socket.io": "^2.4.1",
         "spiced-pg": "^1.0.0",
         "uid-safe": "^2.1.4",
-        "webpack": "^1.14.0",
-        "webpack-dev-middleware": "^1.8.4"
+        "webpack": "^4.27.0"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "css-loader": "^5.2.6",
         "eslint": "^5.6.0",
-        "eslint-plugin-react": "^7.11.1"
+        "eslint-plugin-react": "^7.11.1",
+        "style-loader": "^2.0.0",
+        "webpack-dev-middleware": "^5.0.0"
     }
 }
