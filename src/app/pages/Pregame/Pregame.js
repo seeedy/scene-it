@@ -24,11 +24,10 @@ class Pregame extends React.Component {
     return state;
   }
 
-  setPlayerName(e) {
+  setPlayerName(e, value) {
+    console.log('set player name', e.keyCode, value);
     if (e.keyCode === 13) {
-      getSocket().emit('setPlayerName', e.target.value);
-      this.btn.classList.remove('hidden');
-      this.input.classList.add('hidden');
+      getSocket().emit('setPlayerName', value);
     }
   }
 
@@ -58,7 +57,7 @@ class Pregame extends React.Component {
         <div id='pregame-wrapper'>
           <h1>Scene it?</h1>
           <div id='online-players'>
-            <Filmroll name={self.name} />
+            <Filmroll name={self.name} setPlayerName={this.setPlayerName} />
 
             {otherPlayers.map((player) => (
               <div className='player-wrapper' key={player.userId}>
